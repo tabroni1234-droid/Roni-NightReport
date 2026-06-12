@@ -3,326 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中南區民雄廠 - 業績回報產生器</title>
+    <title>中南區民雄廠 - 業績回報系統</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #f4f6f9;
             color: #333;
-            padding: 20px;
-            max-width: 800px;
+            padding: 15px;
+            max-width: 600px;
             margin: 0 auto;
         }
-        h2 {
-            color: #1a73e8;
-            border-bottom: 2px solid #1a73e8;
-            padding-bottom: 10px;
-        }
+        h2 { color: #1a73e8; text-align: center; margin-bottom: 20px; font-size: 1.5rem; }
         .section {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .form-group {
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             margin-bottom: 15px;
         }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .grid-5 {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .grid-header {
-            font-weight: bold;
-            text-align: center;
-        }
-        .grid-header:first-child { text-align: left; }
-        .total-row {
-            background-color: #e8f0fe;
-            padding: 10px;
-            border-radius: 4px;
-            font-weight: bold;
+        label { font-weight: bold; display: block; margin-bottom: 8px; color: #444; }
+        textarea {
+            width: 100%; height: 100px; padding: 10px;
+            border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;
+            font-family: monospace; resize: vertical; font-size: 14px;
         }
         button {
-            background-color: #1a73e8;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
+            background-color: #1a73e8; color: white; border: none;
+            padding: 12px; font-size: 16px; border-radius: 8px;
+            cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px;
         }
-        button:hover {
-            background-color: #1557b0;
+        button:hover { background-color: #1557b0; }
+        .hint { font-size: 0.85em; color: #666; margin-top: 4px; }
+        .grid-row {
+            display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr 1fr;
+            gap: 6px; align-items: center; margin-bottom: 12px;
+            padding-bottom: 12px; border-bottom: 1px dashed #eee;
         }
-        textarea {
-            width: 100%;
-            height: 150px;
-            font-family: monospace;
-            margin-bottom: 10px;
-            padding: 10px;
-            box-sizing: border-box;
+        .grid-header { font-weight: bold; text-align: center; font-size: 0.85em; color: #666; }
+        .grid-header:first-child { text-align: left; }
+        .grid-row input[type="number"] {
+            width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; text-align: center; font-size: 14px; box-sizing: border-box;
         }
-        .hint {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 2px;
+        .total-box { background: #e8f0fe; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 15px; }
+        .item-input-group {
+            display: grid; grid-template-columns: 1.8fr 1fr; gap: 10px; margin-bottom: 10px; align-items: center;
         }
+        .item-input-group input {
+            width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; text-align: center; font-size: 15px; box-sizing: border-box;
+        }
+        .off-duty { opacity: 0.3; pointer-events: none; }
+        .chk-box { width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; cursor: pointer; }
+        .staff-name { font-weight: bold; font-size: 15px; vertical-align: middle; }
     </style>
 </head>
 <body>
 
-    <h2>中南區民雄廠 業績回報系統</h2>
+    <h2>業績回報產生器 (鍵盤輸入版)</h2>
 
     <div class="section">
-        <label for="rawInput">1. 請貼上「當天」的業績文字範本：</label>
-        <textarea id="rawInput" placeholder="請將當天業績完整複製貼到此處..."></textarea>
-        <button onclick="parseAndSetup()">解析文字並產生今日表單</button>
+        <label>1. 請貼上「昨天」的 LINE 業績文字：</label>
+        <textarea id="rawInput" placeholder="請在此處完整貼上昨天的回報訊息..."></textarea>
+        <button onclick="parseText()">解析文字並生成今日表單</button>
     </div>
 
     <div id="formContainer" class="section" style="display:none;">
-        <h3>2. 請填寫新一天的業績數值</h3>
+        <label>2. 今日回報日期：</label>
+        <input type="text" id="reportDate" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; box-sizing:border-box; font-weight:bold; font-size:15px;">
+        <div class="hint">（日期已自動幫您進位 +1 天）</div>
         
-        <div class="form-group">
-            <label>回報日期：</label>
-            <input type="text" id="reportDate" style="width: 200px;">
-            <div class="hint">（系統已自動幫您加 1 天）</div>
-        </div>
-
-        <hr>
+        <hr style="border:0; border-top:1px solid #ddd; margin:20px 0;">
         
-        <label>個積填寫：</label>
-        <div class="grid-5">
-            <div class="grid-header">名字</div>
+        <label>個積填寫（請用鍵盤輸入數字，請假請取消勾選）：</label>
+        <div class="grid-row" style="border-bottom: 2px solid #ccc; padding-bottom: 6px; margin-bottom: 10px;">
+            <div class="grid-header">出勤 / 名字</div>
             <div class="grid-header">新單</div>
             <div class="grid-header">續約</div>
             <div class="grid-header">A專案</div>
             <div class="grid-header">重入</div>
         </div>
         
-        <div id="personalContainer"></div>
+        <div id="personalArea"></div>
 
-        <div class="form-group total-row">
-            <div class="grid-5">
-                <div>自動總計：</div>
-                <div id="tot_single">0</div>
-                <div id="tot_renew">0</div>
-                <div id="tot_project">0</div>
-                <div id="tot_rejoin">0</div>
+        <div class="total-box">
+            <div class="grid-row" style="margin:0; padding:0; border:none;">
+                <div style="color:#1557b0;">今日總計：</div>
+                <div id="tot_single" style="text-align:center; color:#1557b0;">0</div>
+                <div id="tot_renew" style="text-align:center; color:#1557b0;">0</div>
+                <div id="tot_project" style="text-align:center; color:#1557b0;">0</div>
+                <div id="tot_rejoin" style="text-align:center; color:#1557b0;">0</div>
+            </div>
+            <div style="margin-top: 10px; font-size: 0.95em; color: #444; border-top: 1px solid #b6d4fe; padding-top: 8px;">
+                自動計算上班人數：<span id="workPeopleCount" style="color:#1a73e8; font-size:1.2em; font-weight:bold;">0</span> 人
             </div>
         </div>
 
-        <hr>
+        <hr style="border:0; border-top:1px solid #ddd; margin:20px 0;">
 
-        <div class="form-group">
-            <label>上班人數：</label>
-            <input type="number" id="v_work_people" value="0">
-        </div>
-        
-        <div class="grid-5" style="grid-template-columns: 1fr 1fr; max-width: 400px;">
-            <div><label>AP 目前：</label><input type="number" id="v_ap_base" readonly style="background:#eee;"></div>
-            <div><label>AP 新增 (+)：</label><input type="number" id="v_ap_add" value="0"></div>
-            
-            <div><label>BR 目前：</label><input type="number" id="v_br_base" readonly style="background:#eee;"></div>
-            <div><label>BR 新增 (+)：</label><input type="number" id="v_br_add" value="0"></div>
-            
-            <div><label>WI 目前：</label><input type="number" id="v_wi_base" readonly style="background:#eee;"></div>
-            <div><label>WI 新增 (+)：</label><input type="number" id="v_wi_add" value="0"></div>
-            
-            <div><label>VIP 目前：</label><input type="number" id="v_vip_base" readonly style="background:#eee;"></div>
-            <div><label>VIP 新增 (+)：</label><input type="number" id="v_vip_add" value="0"></div>
-        </div>
+        <label>備註各指標進度 (今日新增填右邊)：</label>
+        <div id="itemsArea"></div>
 
-        <hr>
-
-        <div class="grid-5" style="grid-template-columns: 1fr 1fr; max-width: 400px;">
-            <div><label>重新入會 目前：</label><input type="number" id="v_re_base" readonly style="background:#eee;"></div>
-            <div><label>重新入會 新增 (+)：</label><input type="number" id="v_re_add" value="0"></div>
-
-            <div><label>續約 目前：</label><input type="number" id="v_un_base" readonly style="background:#eee;"></div>
-            <div><label>續約 新增 (+)：</label><input type="number" id="v_un_add" value="0"></div>
-
-            <div><label>推薦名單數 目前：</label><input type="number" id="v_ref_base" readonly style="background:#eee;"></div>
-            <div><label>推薦名單數 新增 (+)：</label><input type="number" id="v_ref_add" value="0"></div>
-
-            <div><label>限定活動數 目前：</label><input type="number" id="v_act_base" readonly style="background:#eee;"></div>
-            <div><label>限定活動數 新增 (+)：</label><input type="number" id="v_act_add" value="0"></div>
-
-            <div><label>續不綁/轉續年 目前：</label><input type="number" id="v_not_base" readonly style="background:#eee;"></div>
-            <div><label>續不綁/轉續年 新增 (+)：</label><input type="number" id="v_not_add" value="0"></div>
-        </div>
-
-        <br>
-        <button onclick="generateAndCopy()" style="background-color: #28a745;">將結果複製到剪貼簿</button>
+        <button onclick="copyResult()" style="background-color: #28a745; margin-top: 25px; padding: 15px; font-size: 18px; border-radius: 10px;">將結果複製到剪貼簿</button>
     </div>
 
     <script>
-        // 固定名單
+        // 員工名單固定
         const staffList = ['Zee', 'Wen', 'Peter', 'Allen', 'Roni'];
-        
-        // 固定的換約與退單值 (依據要求不提供修改)
-        let fixedChange = "0";
-        let fixedRefund = "0";
+        let fixedChange = "0", fixedRefund = "0";
 
-        // 解析文字的函數
-        function parseAndSetup() {
+        // 各項需要連動累加的備註項目
+        const targetItems = [
+            { id: 'ap', label: 'AP', regex: /AP\s*：\s*(\d+)\+(\d+)/ },
+            { id: 'br', label: 'BR', regex: /BR\s*：\s*(\d+)\+(\d+)/ },
+            { id: 'wi', label: 'WI', regex: /WI\s*：\s*(\d+)\+(\d+)/ },
+            { id: 'vip', label: 'VIP', regex: /VIP\s*：\s*(\d+)\+(\d+)/ },
+            { id: 're', label: '重新入會', regex: /重新入會：\s*(\d+)\+(\d+)/ },
+            { id: 'un', label: '續約', regex: /續約：\s*(\d+)\+(\d+)/ },
+            { id: 'ref', label: '推薦名單數', regex: /推薦名單數：\s*(\d+)\+(\d+)/ },
+            { id: 'act', label: '限定活動數', regex: /限定活動數：\s*(\d+)\+(\d+)/ },
+            { id: 'not', label: '續不綁約/轉續年約', regex: /續不綁約\/轉續年約：\s*(\d+)\+(\d+)/ }
+        ];
+
+        // 解析文字核心邏輯
+        function parseText() {
             const txt = document.getElementById('rawInput').value;
-            if(!txt.trim()){
-                alert('請先貼上業績文字！');
+            if(!txt.trim()) {
+                alert('請先貼上昨天的業績文字！');
                 return;
             }
 
-            // 1. 解析日期並+1天
+            // 1. 日期自動 +1 天
             const dateMatch = txt.match(/中南區民雄廠(\d+)\/(\d+)回報/);
             if(dateMatch) {
                 let month = parseInt(dateMatch[1]);
                 let day = parseInt(dateMatch[2]);
-                
-                // 簡單的加一天邏輯
-                let dateObj = new Date(2026, month - 1, day);
-                dateObj.setDate(dateObj.getDate() + 1);
-                
-                document.getElementById('reportDate').value = `中南區民雄廠${dateObj.getMonth() + 1}/${dateObj.getDate()}回報`;
+                let d = new Date(2026, month - 1, day);
+                d.setDate(d.getDate() + 1);
+                document.getElementById('reportDate').value = `中南區民雄廠${d.getMonth() + 1}/${d.getDate()}回報`;
             } else {
-                document.getElementById('reportDate').value = "中南區民雄廠6/13回報"; // 沒抓到時的預設值
+                document.getElementById('reportDate').value = "中南區民雄廠6/13回報";
             }
 
-            // 2. 解析固定欄位 換約與退單
-            const changeMatch = txt.match(/換約：(\d+)/);
-            if(changeMatch) fixedChange = changeMatch[1];
-            const refundMatch = txt.match(/退單：(\d+)/);
-            if(refundMatch) fixedRefund = refundMatch[1];
+            // 2. 擷取固定不需要修改的項目
+            fixedChange = (txt.match(/換約：(\d+)/) || ["", "0"])[1];
+            fixedRefund = (txt.match(/退單：(\d+)/) || ["", "0"])[1];
 
-            // 3. 解析備註加總欄位 (將原本的 A+B 加總變成新一天的基礎值)
-            setupBaseValue(txt, /AP\s*：\s*(\d+)\+(\d+)/, 'v_ap_base');
-            setupBaseValue(txt, /BR\s*：\s*(\d+)\+(\d+)/, 'v_br_base');
-            setupBaseValue(txt, /WI\s*：\s*(\d+)\+(\d+)/, 'v_wi_base');
-            setupBaseValue(txt, /VIP\s*：\s*(\d+)\+(\d+)/, 'v_vip_base');
-            
-            setupBaseValue(txt, /重新入會：\s*(\d+)\+(\d+)/, 'v_re_base');
-            setupBaseValue(txt, /續約：\s*(\d+)\+(\d+)/, 'v_un_base');
-            setupBaseValue(txt, /推薦名單數：\s*(\d+)\+(\d+)/, 'v_ref_base');
-            setupBaseValue(txt, /限定活動數：\s*(\d+)\+(\d+)/, 'v_act_base');
-            setupBaseValue(txt, /續不綁約\/轉續年約：\s*(\d+)\+(\d+)/, 'v_not_base');
-
-            // 4. 解析上班人數
-            const workPeopleMatch = txt.match(/上班人數：(\d+)/);
-            if(workPeopleMatch) document.getElementById('v_work_people').value = workPeopleMatch[1];
-
-            // 5. 渲染個人業績輸入框
-            const personalContainer = document.getElementById('personalContainer');
-            personalContainer.innerHTML = '';
-            
+            // 3. 渲染個人業績輸入框 (點擊自動全選，修改即時計算)
+            const pArea = document.getElementById('personalArea');
+            pArea.innerHTML = '';
             staffList.forEach(name => {
-                let v1=0, v2=0, v3=0, v4=0;
-                // 嘗試從舊文本抓取這個人的數值作為預設值，若無則為0
-                const reg = new RegExp(`${name}：\\s*([\\d.]+)\\/(\\d+)\\/(\\d+)\\/(\\d+)`);
-                const m = txt.match(reg);
-                if(m) {
-                    v1 = m[1]; v2 = m[2]; v3 = m[3]; v4 = m[4];
-                }
-
                 const row = document.createElement('div');
-                row.className = 'grid-5';
+                row.className = 'grid-row';
+                row.id = `row_${name}`;
                 row.innerHTML = `
-                    <div>${name}：</div>
-                    <input type="number" step="0.5" class="p-single" data-name="${name}" value="${v1}" oninput="calculateTotal()">
-                    <input type="number" class="p-renew" data-name="${name}" value="${v2}" oninput="calculateTotal()">
-                    <input type="number" class="p-project" data-name="${name}" value="${v3}" oninput="calculateTotal()">
-                    <input type="number" class="p-rejoin" data-name="${name}" value="${v4}" oninput="calculateTotal()">
+                    <div>
+                        <input type="checkbox" class="chk-box" checked onchange="toggleStaff('${name}')">
+                        <span class="staff-name">${name}</span>
+                    </div>
+                    <input type="number" step="0.5" id="val_${name}_single" value="0" oninput="calculate()" onclick="this.select();">
+                    <input type="number" id="val_${name}_renew" value="0" oninput="calculate()" onclick="this.select();">
+                    <input type="number" id="val_${name}_project" value="0" oninput="calculate()" onclick="this.select();">
+                    <input type="number" id="val_${name}_rejoin" value="0" oninput="calculate()" onclick="this.select();">
                 `;
-                personalContainer.appendChild(row);
+                pArea.appendChild(row);
             });
 
-            // 計算一次總計
-            calculateTotal();
+            // 4. 讀取昨天的 (A+B) 作為今天的基本盤基礎值
+            const iArea = document.getElementById('itemsArea');
+            iArea.innerHTML = '';
+            targetItems.forEach(item => {
+                const match = txt.match(item.regex);
+                const baseVal = match ? (parseInt(match[1]) + parseInt(match[2])) : 0;
+                
+                const div = document.createElement('div');
+                div.className = 'item-input-group';
+                div.innerHTML = `
+                    <div style="font-size:14px; font-weight:500;">${item.label} (${baseVal} + )</div>
+                    <input type="number" id="add_${item.id}" value="0" data-base="${baseVal}" onclick="this.select();">
+                `;
+                iArea.appendChild(div);
+            });
 
-            // 顯示表單
+            // 初始計算
+            calculate();
+            
+            // 展開填寫區
             document.getElementById('formContainer').style.display = 'block';
             document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 輔助解析：把 A+B 變成 (A+B) 作為下一天的基礎值
-        function setupBaseValue(text, regex, elementId) {
-            const match = text.match(regex);
-            if(match) {
-                const total = parseInt(match[1]) + parseInt(match[2]);
-                document.getElementById(elementId).value = total;
-            } else {
-                document.getElementById(elementId).value = 0;
-            }
+        // 出勤勾選連動控制
+        function toggleStaff(name) {
+            const row = document.getElementById(`row_${name}`);
+            const isChecked = row.querySelector('.chk-box').checked;
+            const cols = ['single', 'renew', 'project', 'rejoin'];
+            
+            cols.forEach(type => {
+                const inputEl = document.getElementById(`val_${name}_${type}`);
+                if(!isChecked) {
+                    inputEl.classList.add('off-duty');
+                    inputEl.disabled = true;
+                    inputEl.value = "0"; // 沒出勤則歸零
+                } else {
+                    inputEl.classList.remove('off-duty');
+                    inputEl.disabled = false;
+                }
+            });
+            calculate();
         }
 
-        // 即時計算總計
-        function calculateTotal() {
+        // 即時總計與出勤人數計算
+        function calculate() {
             let fields = ['single', 'renew', 'project', 'rejoin'];
             fields.forEach(f => {
                 let sum = 0;
-                document.querySelectorAll(`.p-${f}`).forEach(input => {
-                    sum += parseFloat(input.value) || 0;
+                staffList.forEach(name => {
+                    const row = document.getElementById(`row_${name}`);
+                    // 只有勾選上班的人才被納入總計計算
+                    if(row && row.querySelector('.chk-box').checked) {
+                        sum += parseFloat(document.getElementById(`val_${name}_${f}`).value) || 0;
+                    }
                 });
                 document.getElementById(`tot_${f}`).innerText = sum;
             });
+
+            // 自動計算上班人數
+            let workCount = 0;
+            document.querySelectorAll('.chk-box').forEach(chk => { if(chk.checked) workCount++; });
+            document.getElementById('workPeopleCount').innerText = workCount;
         }
 
-        // 生成最後格式並複製
-        function generateAndCopy() {
-            const titleDate = document.getElementById('reportDate').value;
-            
-            const t_single = document.getElementById('tot_single').innerText;
-            const t_renew = document.getElementById('tot_renew').innerText;
-            const t_project = document.getElementById('tot_project').innerText;
-            const t_rejoin = document.getElementById('tot_rejoin').innerText;
+        // 複製結果輸出
+        function copyResult() {
+            const dateTitle = document.getElementById('reportDate').value;
+            const t_s = document.getElementById('tot_single').innerText;
+            const t_r = document.getElementById('tot_renew').innerText;
+            const t_p = document.getElementById('tot_project').innerText;
+            const t_j = document.getElementById('tot_rejoin').innerText;
 
-            // 組合個人業績
             let personalText = '';
-            staffList.forEach((name, index) => {
-                const s = document.querySelectorAll('.p-single')[index].value || 0;
-                const r = document.querySelectorAll('.p-renew')[index].value || 0;
-                const p = document.querySelectorAll('.p-project')[index].value || 0;
-                const j = document.querySelectorAll('.p-rejoin')[index].value || 0;
-                personalText += `${name}：${s}/${r}/${p}/${j}\n`;
+            staffList.forEach(name => {
+                const row = document.getElementById(`row_${name}`);
+                // 只有當天有勾選出勤的人，才會出現在最後產生的純文字裡
+                if(row && row.querySelector('.chk-box').checked) {
+                    const s = document.getElementById(`val_${name}_single`).value || 0;
+                    const r = document.getElementById(`val_${name}_renew`).value || 0;
+                    const p = document.getElementById(`val_${name}_project`).value || 0;
+                    const j = document.getElementById(`val_${name}_rejoin`).value || 0;
+                    personalText += `${name}：${s}/${r}/${p}/${j}\n`;
+                }
             });
-            personalText = personalText.trim();
 
-            const workPeople = document.getElementById('v_work_people').value;
-            
-            // 讀取項目
-            const ap_b = document.getElementById('v_ap_base').value, ap_a = document.getElementById('v_ap_add').value;
-            const br_b = document.getElementById('v_br_base').value, br_a = document.getElementById('v_br_add').value;
-            const wi_b = document.getElementById('v_wi_base').value, wi_a = document.getElementById('v_wi_add').value;
-            const vip_b = document.getElementById('v_vip_base').value, vip_a = document.getElementById('v_vip_add').value;
-            
-            const re_b = document.getElementById('v_re_base').value, re_a = document.getElementById('v_re_add').value;
-            const un_b = document.getElementById('v_un_base').value, un_a = document.getElementById('v_un_add').value;
-            const ref_b = document.getElementById('v_ref_base').value, ref_a = document.getElementById('v_ref_add').value;
-            const act_b = document.getElementById('v_act_base').value, act_a = document.getElementById('v_act_add').value;
-            const not_b = document.getElementById('v_not_base').value, not_a = document.getElementById('v_not_add').value;
+            // 組合備註與活動數據
+            let itemsResult = {};
+            targetItems.forEach(item => {
+                const input = document.getElementById(`add_${item.id}`);
+                const addVal = input.value.trim() === "" ? "0" : input.value;
+                itemsResult[item.id] = `${input.dataset.base}+${addVal}`;
+            });
 
-            // 嚴格依照格式拼接字串
-            const resultFormat = 
-`${titleDate}
+            const workPeople = document.getElementById('workPeopleCount').innerText;
+
+            // 嚴格還原原始排版格式
+            const finalTemplate = 
+`${dateTitle}
         單/續約/A專案/重入
-總計：${t_single}/${t_renew}/${t_project}/${t_rejoin}
+總計：${t_s}/${t_r}/${t_p}/${t_j}
 個積
-${personalText}
+${personalText.trim()}
 
 ===============
 換約：${fixedChange}
@@ -331,25 +278,24 @@ ${personalText}
 =================
 備註:
 上班人數：${workPeople}
-AP ：${ap_b}+${ap_a}
-BR ：${br_b}+${br_a}
-WI ：${wi_b}+${wi_a}
-VIP：${vip_b}+${vip_a}
+AP ：${itemsResult['ap']}
+BR ：${itemsResult['br']}
+WI ：${itemsResult['wi']}
+VIP：${itemsResult['vip']}
 =================
-重新入會：${re_b}+${re_a}
-續約：${un_b}+${un_a}
-推薦名單數：${ref_b}+${ref_a}
-限定活動數：${act_b}+${act_a}
-續不綁約/轉續年約：${not_b}+${not_a}`;
+重新入會：${itemsResult['re']}
+續約：${itemsResult['un']}
+推薦名單數：${itemsResult['ref']}
+限定活動數：${itemsResult['act']}
+續不綁約/轉續年約：${itemsResult['not']}`;
 
             // 執行複製到剪貼簿
-            navigator.clipboard.writeText(resultFormat).then(() => {
-                alert('今日業績格式已成功複製到剪貼簿！可以直接去貼上了。');
-            }).catch(err => {
-                alert('複製失敗，請手動全選複製。');
+            navigator.clipboard.writeText(finalTemplate).then(() => {
+                alert('🎉 業績回報已成功複製！請直接去 LINE 群組貼上。');
+            }).catch(() => {
+                alert('複製失敗，請手動全選畫面文字複製。');
             });
         }
     </script>
 </body>
 </html>
-
