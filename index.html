@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RONI FITNESS FACTORY - 業績回報系統</title>
+    <title>中南區民雄廠 - 業績回報系統</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* 全站黑金極奢風格 */
+        /* 全站黑金風格 */
         body {
             font-family: 'Noto Serif TC', 'SimSun', '宋體', serif;
             background-color: #0b0b0c; /* 奢華微光黑 */
@@ -17,7 +17,6 @@
             margin: 0 auto;
         }
         
-        /* 主標題：還原圖片中的金色字體質感 */
         h2 {
             font-family: 'Cinzel', 'Noto Serif TC', serif;
             color: #c5a880; /* 香檳金 */
@@ -45,7 +44,7 @@
             letter-spacing: 1px;
         }
 
-        /* 核心區塊：復刻圖片的金色 L 型對角線框 */
+        /* 金色 L 型對角線框 */
         .section {
             background: #111112; 
             padding: 25px 20px;
@@ -77,7 +76,7 @@
             letter-spacing: 1px;
         }
 
-        /* 輸入框底線與文字框優化 */
+        /* 輸入框與文字框 */
         textarea {
             width: 100%;
             height: 110px;
@@ -146,7 +145,7 @@
             letter-spacing: 1px;
         }
 
-        /* 高級香檳金總計區塊 */
+        /* 總計區塊 */
         .total-row {
             border: 1px solid #c5a880;
             padding: 14px 12px;
@@ -157,14 +156,14 @@
             background-color: rgba(197, 168, 128, 0.03);
         }
 
-        /* 按鈕：經典黑金商務方塊 */
+        /* 按鈕：經典黑金方塊 */
         button {
             background-color: #c5a880; /* 金底 */
             color: #0b0b0c; /* 黑字 */
             border: none;
             padding: 15px;
             font-size: 16px;
-            font-family: 'Cinzel', 'Noto Serif TC', serif;
+            font-family: 'Noto Serif TC', serif;
             cursor: pointer;
             width: 100%;
             font-weight: 700;
@@ -196,26 +195,26 @@
     <div class="sub-title">中南區民雄廠 ˙ 業績回報系統</div>
 
     <div class="section">
-        <label for="rawInput">ENTER YESTERDAY'S REPORT / 貼上昨日業績文字：</label>
+        <label for="rawInput">1. 請貼上「昨天」的 LINE 業績文字：</label>
         <textarea id="rawInput" placeholder="請在此處貼上昨天群組的最後一則回報訊息..."></textarea>
-        <button onclick="parseAndSetup()">解析文字 ➔ GENERATE FORM</button>
+        <button onclick="parseAndSetup()">解析文字 ➔ 生成今日表單</button>
     </div>
 
     <div id="formContainer" class="section" style="display:none;">
-        <h3>DAILY REPORT / 填寫今日營業成果</h3>
+        <h3>2. 填寫今日營業成果</h3>
         <br>
         
         <div class="form-group">
-            <label>REPORT DATE / 回報日期：</label>
+            <label>回報日期：</label>
             <input type="text" id="reportDate" style="max-width: 280px; text-align: left;">
-            <div class="hint">（系統已解鎖自動推算加 1 天）</div>
+            <div class="hint">（系統已自動推算加 1 天）</div>
         </div>
 
         <hr>
         
-        <label>PERSONAL PERFORMANCE / 個積填寫 (今日個積已強制歸零)：</label>
+        <label>個積填寫 (今日個積已強制歸零)：</label>
         <div class="grid-5">
-            <div class="grid-header">NAME</div>
+            <div class="grid-header">名字</div>
             <div class="grid-header">新單</div>
             <div class="grid-header">續約</div>
             <div class="grid-header">A專案</div>
@@ -237,11 +236,11 @@
         <hr>
 
         <div class="form-group" style="max-width: 220px;">
-            <label>ATTENDANCE / 上班人數：</label>
+            <label>上班人數：</label>
             <input type="number" id="v_work_people" value="0" onclick="this.select();">
         </div>
         
-        <label>ACCUMULATED INDICATORS / 備註指標進度 (填寫今日新增)：</label>
+        <label>備註各項目累積進度 (填寫今日新增)：</label>
         <div class="grid-5" style="grid-template-columns: 1.4fr 1fr; max-width: 450px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
             <div style="font-size:0.85rem; color:#666666;">項目 (昨日累積 + )</div>
             <div style="font-size:0.85rem; color:#c5a880; text-align:center;">今日新增</div>
@@ -265,7 +264,7 @@
             <div>續不綁/轉續年：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
         </div>
 
-        <button onclick="generateAndCopy()" style="margin-top: 35px;">COPY TO CLIPBOARD / 複製今日業績</button>
+        <button onclick="generateAndCopy()" style="margin-top: 35px;">一鍵複製今日業績</button>
     </div>
 
     <script>
@@ -311,8 +310,7 @@
             const workPeopleMatch = txt.match(/上班人數：(\d+)/);
             if(workPeopleMatch) document.getElementById('v_work_people').value = workPeopleMatch[1];
 
-            // 5. 渲染個人業績輸入框 
-            // 【核心修正】：將 value 鎖定為 0，解析完昨天文本後個積保證完全歸零乾淨
+            // 5. 渲染個人業績輸入框 (數值強制設為 0 歸零)
             const personalContainer = document.getElementById('personalContainer');
             personalContainer.innerHTML = '';
             
@@ -406,7 +404,7 @@ VIP：${getVal('vip')}
 續不綁約/轉續年約：${getVal('not')}`;
 
             navigator.clipboard.writeText(resultFormat).then(() => {
-                alert('🎉 今日業績回報已複製成功！');
+                alert('🎉 今日業績回報已成功複製！');
             }).catch(err => {
                 alert('複製失敗，請手動複製。');
             });
