@@ -3,42 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中南區民雄廠 - 業績回報系統</title>
+    <title>RONI FITNESS FACTORY - 業績回報系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* 全站指定宋體、純黑背景、純白文字 */
+        /* 全站黑金極奢風格 */
         body {
-            font-family: "SimSun", "PMingLiU", "宋體", serif;
-            background-color: #000000; 
-            color: #ffffff;
-            padding: 15px;
+            font-family: 'Noto Serif TC', 'SimSun', '宋體', serif;
+            background-color: #0b0b0c; /* 奢華微光黑 */
+            color: #e2e8f0;
+            padding: 20px 15px;
             max-width: 650px;
             margin: 0 auto;
         }
         
+        /* 主標題：還原圖片中的金色字體質感 */
         h2 {
-            color: #ffffff;
+            font-family: 'Cinzel', 'Noto Serif TC', serif;
+            color: #c5a880; /* 香檳金 */
             text-align: center;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .sub-title {
+            text-align: center;
+            color: #8a8a8f;
+            font-size: 0.85rem;
             letter-spacing: 2px;
-            margin-bottom: 25px;
-            font-size: 1.6rem;
-            border-bottom: 1px solid #ffffff;
-            padding-bottom: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #222224;
+            padding-bottom: 15px;
         }
         
         h3 {
-            color: #ffffff;
+            color: #c5a880;
             margin-top: 0;
-            border-left: 2px solid #ffffff;
-            padding-left: 10px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
         }
 
+        /* 核心區塊：復刻圖片的金色 L 型對角線框 */
         .section {
-            background: #000000; 
-            padding: 20px;
-            border-radius: 0px; /* 取消圓角，走硬朗極簡風 */
-            border: 1px solid #ffffff;
-            margin-bottom: 20px;
+            background: #111112; 
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            position: relative;
+            border: 1px solid #1c1c1e;
+        }
+        /* 左上角金邊 */
+        .section::before {
+            content: ''; position: absolute; top: 8px; left: 8px; width: 12px; height: 12px;
+            border-top: 2px solid #c5a880; border-left: 2px solid #c5a880; opacity: 0.7;
+        }
+        /* 右下角金邊 */
+        .section::after {
+            content: ''; position: absolute; bottom: 8px; right: 8px; width: 12px; height: 12px;
+            border-bottom: 2px solid #c5a880; border-right: 2px solid #c5a880; opacity: 0.7;
         }
 
         .form-group {
@@ -49,137 +72,150 @@
             display: block;
             font-weight: bold;
             margin-bottom: 8px;
-            color: #ffffff;
-            font-size: 0.95rem;
+            color: #c5a880; /* 金色標籤 */
+            font-size: 0.9rem;
+            letter-spacing: 1px;
         }
 
-        /* 輸入框與文字框 */
+        /* 輸入框底線與文字框優化 */
         textarea {
             width: 100%;
-            height: 120px;
-            font-family: "SimSun", "PMingLiU", "宋體", serif;
-            background-color: #000000;
+            height: 110px;
+            font-family: 'Noto Serif TC', serif;
+            background-color: #0b0b0c;
             color: #ffffff;
-            border: 1px solid #ffffff;
+            border: 1px solid #2c2c2e;
             padding: 12px;
             box-sizing: border-box;
             font-size: 14px;
+            transition: all 0.3s;
         }
         textarea:focus {
-            outline: 1px solid #ffffff;
+            border-color: #c5a880;
+            outline: none;
+            box-shadow: 0 0 8px rgba(197, 168, 128, 0.2);
         }
 
         input[type="text"], input[type="number"] {
             width: 100%;
             padding: 10px;
-            background-color: #000000;
+            background-color: #0b0b0c;
             color: #ffffff;
-            border: 1px solid #555555;
+            border: 1px solid #2c2c2e;
             box-sizing: border-box;
             font-size: 15px;
             text-align: center;
-            font-family: "SimSun", "PMingLiU", "宋體", serif;
+            font-family: 'Noto Serif TC', serif;
+            transition: all 0.3s;
         }
         input:focus {
-            border-color: #ffffff;
+            border-color: #c5a880;
             outline: none;
+            box-shadow: 0 0 10px rgba(197, 168, 128, 0.3);
         }
         input[readonly] {
-            background-color: #222222 !important;
-            color: #888888;
-            border-color: #333333;
+            background-color: #1a1a1c !important;
+            color: #666666;
+            border-color: #1a1a1c;
         }
 
-        /* 表格排版 */
+        /* 業績網格排版 */
         .grid-5 {
             display: grid;
-            grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
             gap: 8px;
             align-items: center;
             margin-bottom: 12px;
         }
         .grid-header {
+            font-family: 'Noto Serif TC', serif;
             font-weight: bold;
             text-align: center;
             font-size: 0.85rem;
-            color: #ffffff;
+            color: #8a8a8f;
             padding-bottom: 5px;
-            border-bottom: 1px solid #ffffff;
+            border-bottom: 1px solid #2c2c2e;
         }
         .grid-header:first-child { text-align: left; }
         
         .staff-name {
+            font-family: 'Cinzel', 'Noto Serif TC', serif;
             font-weight: bold;
             color: #ffffff;
-            font-size: 15px;
+            font-size: 14px;
+            letter-spacing: 1px;
         }
 
-        /* 總計白框 */
+        /* 高級香檳金總計區塊 */
         .total-row {
-            border: 1px solid #ffffff;
-            padding: 12px;
+            border: 1px solid #c5a880;
+            padding: 14px 12px;
             font-weight: bold;
-            color: #ffffff;
-            margin-top: 15px;
+            color: #c5a880;
+            margin-top: 20px;
+            font-family: 'Cinzel', 'Noto Serif TC', serif;
+            background-color: rgba(197, 168, 128, 0.03);
         }
 
-        /* 按鈕：極簡黑底白字 */
+        /* 按鈕：經典黑金商務方塊 */
         button {
-            background-color: #ffffff;
-            color: #000000;
-            border: 1px solid #ffffff;
-            padding: 14px;
+            background-color: #c5a880; /* 金底 */
+            color: #0b0b0c; /* 黑字 */
+            border: none;
+            padding: 15px;
             font-size: 16px;
-            font-family: "SimSun", "PMingLiU", "宋體", serif;
+            font-family: 'Cinzel', 'Noto Serif TC', serif;
             cursor: pointer;
             width: 100%;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: all 0.2s;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.2s ease;
         }
         button:hover {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: #0b0b0c;
+            color: #c5a880;
+            outline: 1px solid #c5a880;
         }
 
         .hint {
             font-size: 0.8em;
-            color: #aaaaaa;
-            margin-top: 5px;
+            color: #666666;
+            margin-top: 6px;
         }
         
         hr {
             border: 0;
-            border-top: 1px solid #555555;
-            margin: 20px 0;
+            border-top: 1px solid #2c2c2e;
+            margin: 25px 0;
         }
     </style>
 </head>
 <body>
 
-    <h2>中南區民雄廠 業績回報系統</h2>
+    <h2>RONI FITNESS FACTORY</h2>
+    <div class="sub-title">中南區民雄廠 ˙ 業績回報系統</div>
 
     <div class="section">
-        <label for="rawInput">1. 請貼上「昨天」的 LINE 業績文字：</label>
-        <textarea id="rawInput" placeholder="請將昨天群組的業績完整複製貼到此處..."></textarea>
-        <button onclick="parseAndSetup()">解析文字 ➔ 生成今日表單</button>
+        <label for="rawInput">ENTER YESTERDAY'S REPORT / 貼上昨日業績文字：</label>
+        <textarea id="rawInput" placeholder="請在此處貼上昨天群組的最後一則回報訊息..."></textarea>
+        <button onclick="parseAndSetup()">解析文字 ➔ GENERATE FORM</button>
     </div>
 
     <div id="formContainer" class="section" style="display:none;">
-        <h3>2. 填寫今日營業成果</h3>
+        <h3>DAILY REPORT / 填寫今日營業成果</h3>
         <br>
         
         <div class="form-group">
-            <label>回報日期：</label>
-            <input type="text" id="reportDate" style="max-width: 260px; text-align: left;">
-            <div class="hint">（系統已自動推算加 1 天）</div>
+            <label>REPORT DATE / 回報日期：</label>
+            <input type="text" id="reportDate" style="max-width: 280px; text-align: left;">
+            <div class="hint">（系統已解鎖自動推算加 1 天）</div>
         </div>
 
         <hr>
         
-        <label>個積填寫 (昨日數據已強制歸零，請直接輸入今日新個積)：</label>
+        <label>PERSONAL PERFORMANCE / 個積填寫 (今日個積已強制歸零)：</label>
         <div class="grid-5">
-            <div class="grid-header">名字</div>
+            <div class="grid-header">NAME</div>
             <div class="grid-header">新單</div>
             <div class="grid-header">續約</div>
             <div class="grid-header">A專案</div>
@@ -190,25 +226,25 @@
 
         <div class="form-group total-row">
             <div class="grid-5" style="margin-bottom: 0;">
-                <div>今日總計:</div>
-                <div id="tot_single" style="text-align: center;">0</div>
-                <div id="tot_renew" style="text-align: center;">0</div>
-                <div id="tot_project" style="text-align: center;">0</div>
-                <div id="tot_rejoin" style="text-align: center;">0</div>
+                <div style="color: #ffffff; font-family:'Noto Serif TC';">今日總計:</div>
+                <div id="tot_single" style="text-align: center; font-size: 1.05rem;">0</div>
+                <div id="tot_renew" style="text-align: center; font-size: 1.05rem;">0</div>
+                <div id="tot_project" style="text-align: center; font-size: 1.05rem;">0</div>
+                <div id="tot_rejoin" style="text-align: center; font-size: 1.05rem;">0</div>
             </div>
         </div>
 
         <hr>
 
-        <div class="form-group" style="max-width: 200px;">
-            <label>上班人數：</label>
+        <div class="form-group" style="max-width: 220px;">
+            <label>ATTENDANCE / 上班人數：</label>
             <input type="number" id="v_work_people" value="0" onclick="this.select();">
         </div>
         
-        <label>備註各項目累積進度 (填寫今日新增)：</label>
-        <div class="grid-5" style="grid-template-columns: 1.2fr 1fr; max-width: 450px; padding: 10px; border: 1px solid #555555;">
-            <div style="font-size:0.9rem; color:#aaaaaa;">項目 (昨日累積 + )</div>
-            <div style="font-size:0.9rem; color:#ffffff; text-align:center;">今日新增</div>
+        <label>ACCUMULATED INDICATORS / 備註指標進度 (填寫今日新增)：</label>
+        <div class="grid-5" style="grid-template-columns: 1.4fr 1fr; max-width: 450px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
+            <div style="font-size:0.85rem; color:#666666;">項目 (昨日累積 + )</div>
+            <div style="font-size:0.85rem; color:#c5a880; text-align:center;">今日新增</div>
             
             <div>AP ：</div><td><input type="number" id="v_ap_add" value="0" onclick="this.select();"><input type="hidden" id="v_ap_base"></td>
             <div>BR ：</div><td><input type="number" id="v_br_add" value="0" onclick="this.select();"><input type="hidden" id="v_br_base"></td>
@@ -218,9 +254,9 @@
 
         <br>
 
-        <div class="grid-5" style="grid-template-columns: 1.2fr 1fr; max-width: 450px; padding: 10px; border: 1px solid #555555;">
-            <div style="font-size:0.9rem; color:#aaaaaa;">項目 (昨日累積 + )</div>
-            <div style="font-size:0.9rem; color:#ffffff; text-align:center;">今日新增</div>
+        <div class="grid-5" style="grid-template-columns: 1.4fr 1fr; max-width: 450px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
+            <div style="font-size:0.85rem; color:#666666;">項目 (昨日累積 + )</div>
+            <div style="font-size:0.85rem; color:#c5a880; text-align:center;">今日新增</div>
             
             <div>重新入會：</div><td><input type="number" id="v_re_add" value="0" onclick="this.select();"><input type="hidden" id="v_re_base"></td>
             <div>續約：</div><td><input type="number" id="v_un_add" value="0" onclick="this.select();"><input type="hidden" id="v_un_base"></td>
@@ -229,7 +265,7 @@
             <div>續不綁/轉續年：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
         </div>
 
-        <button onclick="generateAndCopy()" style="margin-top: 30px; padding: 16px; font-size: 18px;">一鍵複製今日業績</button>
+        <button onclick="generateAndCopy()" style="margin-top: 35px;">COPY TO CLIPBOARD / 複製今日業績</button>
     </div>
 
     <script>
@@ -276,7 +312,7 @@
             if(workPeopleMatch) document.getElementById('v_work_people').value = workPeopleMatch[1];
 
             // 5. 渲染個人業績輸入框 
-            // 【修正重點】：此處 value 直接強制設為 0，不再抓取昨天的值，確保當天表單一開始是完全乾淨歸零的。
+            // 【核心修正】：將 value 鎖定為 0，解析完昨天文本後個積保證完全歸零乾淨
             const personalContainer = document.getElementById('personalContainer');
             personalContainer.innerHTML = '';
             
@@ -284,7 +320,7 @@
                 const row = document.createElement('div');
                 row.className = 'grid-5';
                 row.innerHTML = `
-                    <div class="staff-name">${name}：</div>
+                    <div class="staff-name">${name}</div>
                     <input type="number" step="0.5" class="p-single" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-renew" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-project" value="0" oninput="calculateTotal()" onclick="this.select();">
@@ -370,7 +406,7 @@ VIP：${getVal('vip')}
 續不綁約/轉續年約：${getVal('not')}`;
 
             navigator.clipboard.writeText(resultFormat).then(() => {
-                alert('今日業績回報已複製到剪貼簿！');
+                alert('🎉 今日業績回報已複製成功！');
             }).catch(err => {
                 alert('複製失敗，請手動複製。');
             });
