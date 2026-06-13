@@ -7,9 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Noto+Serif+TC:wght=500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* 全站黑金風格與強制宋體設定 */
+        /* 👑 全站黑金風格與「強力強制」思源宋體設定 */
         * {
             box-sizing: border-box;
+            font-family: 'Noto Serif TC', 'PMingLiU', 'MingLiU', 'Apple LiSung', 'Songti TC', serif !important;
+        }
+
+        /* 👑 強制讓所有輸入框、選單以及其灰色提示字（Placeholder）全部換上宋體 */
+        input, select, textarea, button, option,
+        input::placeholder, textarea::placeholder {
             font-family: 'Noto Serif TC', 'PMingLiU', 'MingLiU', 'Apple LiSung', 'Songti TC', serif !important;
         }
         
@@ -362,7 +368,7 @@
             fixedChange = (txt.match(/換約：(\d+)/) || ["", "0"])[1];
             fixedRefund = (txt.match(/退單：(\d+)/) || ["", "0"])[1];
 
-            // 3. 👑 解析基礎累計值，並動態將加總數字更新到標籤畫面上
+            // 3. 解析基礎累計值，並動態將加總數字更新到標籤畫面上
             setupBaseValue(txt, /AP\s*：\s*(\d+)\+(\d+)/, 'v_ap_base', 'lbl_ap_base');
             setupBaseValue(txt, /BR\s*：\s*(\d+)\+(\d+)/, 'v_br_base', 'lbl_br_base');
             setupBaseValue(txt, /WI\s*：\s*(\d+)\+(\d+)/, 'v_wi_base', 'lbl_wi_base');
@@ -414,7 +420,6 @@
             document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // 👑 升級解析邏輯：解析出昨日基礎與昨日新增，加總後寫入提示標籤
         function setupBaseValue(text, regex, elementId, labelId) {
             const match = text.match(regex);
             if (match) {
