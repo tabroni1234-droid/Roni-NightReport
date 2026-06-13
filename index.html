@@ -8,17 +8,22 @@
     
     <style>
         /* 全站黑金風格 */
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Noto Serif TC', 'SimSun', '宋體', serif;
+            font-family: 'Noto Serif TC', 'SimSun', '宋體', serif !important;
             background-color: #0b0b0c; /* 奢華微光黑 */
             color: #e2e8f0;
             padding: 20px 15px;
             max-width: 650px;
             margin: 0 auto;
+            -webkit-font-smoothing: antialiased;
         }
         
         h2 {
-            font-family: 'Cinzel', 'Noto Serif TC', serif;
+            font-family: 'Cinzel', 'Noto Serif TC', serif !important;
             color: #c5a880; /* 香檳金 */
             text-align: center;
             letter-spacing: 3px;
@@ -80,12 +85,11 @@
         textarea {
             width: 100%;
             height: 110px;
-            font-family: 'Noto Serif TC', serif;
+            font-family: 'Noto Serif TC', serif !important;
             background-color: #0b0b0c;
             color: #ffffff;
             border: 1px solid #2c2c2e;
             padding: 12px;
-            box-sizing: border-box;
             font-size: 14px;
             transition: all 0.3s;
         }
@@ -96,16 +100,19 @@
         }
 
         input[type="text"], input[type="number"] {
+            -webkit-appearance: none; /* 強制解除 iOS 預設黑體樣式 */
+            -moz-appearance: none;
+            appearance: none;
             width: 100%;
             padding: 10px;
             background-color: #0b0b0c;
             color: #ffffff;
             border: 1px solid #2c2c2e;
-            box-sizing: border-box;
             font-size: 15px;
             text-align: center;
-            font-family: 'Noto Serif TC', serif;
+            font-family: 'Noto Serif TC', serif !important;
             transition: all 0.3s;
+            border-radius: 0px;
         }
         input:focus {
             border-color: #c5a880;
@@ -127,7 +134,7 @@
             margin-bottom: 12px;
         }
         .grid-header {
-            font-family: 'Noto Serif TC', serif;
+            font-family: 'Noto Serif TC', serif !important;
             font-weight: bold;
             text-align: center;
             font-size: 0.85rem;
@@ -138,11 +145,62 @@
         .grid-header:first-child { text-align: left; }
         
         .staff-name {
-            font-family: 'Cinzel', 'Noto Serif TC', serif;
+            font-family: 'Cinzel', 'Noto Serif TC', serif !important;
             font-weight: bold;
             color: #ffffff;
             font-size: 14px;
             letter-spacing: 1px;
+        }
+
+        /* 外廠動態新增區區塊樣式 */
+        .ext-consultant-card {
+            background: #161618;
+            border: 1px dashed #c5a880;
+            padding: 15px 12px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .ext-meta-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .ext-meta-inputs input {
+            text-align: left !important;
+            padding-left: 10px;
+            font-size: 13px;
+        }
+        .btn-delete-ext {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff5252;
+            color: white;
+            border: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 22px;
+            text-align: center;
+            cursor: pointer;
+            padding: 0;
+        }
+        .btn-add-ext {
+            background-color: transparent;
+            color: #c5a880;
+            border: 1px dashed #c5a880;
+            padding: 10px;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+        .btn-add-ext:hover {
+            background-color: rgba(197, 168, 128, 0.08);
+            color: #c5a880;
+            outline: none;
         }
 
         /* 總計區塊 */
@@ -152,7 +210,7 @@
             font-weight: bold;
             color: #c5a880;
             margin-top: 20px;
-            font-family: 'Cinzel', 'Noto Serif TC', serif;
+            font-family: 'Cinzel', 'Noto Serif TC', serif !important;
             background-color: rgba(197, 168, 128, 0.03);
         }
 
@@ -163,7 +221,7 @@
             border: none;
             padding: 15px;
             font-size: 16px;
-            font-family: 'Noto Serif TC', serif;
+            font-family: 'Noto Serif TC', serif !important;
             cursor: pointer;
             width: 100%;
             font-weight: 700;
@@ -223,6 +281,9 @@
         
         <div id="personalContainer"></div>
 
+        <div id="extConsultantContainer"></div>
+        <button type="button" class="btn-add-ext" onclick="addExtConsultantRow()">＋ 新增外廠顧問業績</button>
+
         <div class="form-group total-row">
             <div class="grid-5" style="margin-bottom: 0;">
                 <div style="color: #ffffff; font-family:'Noto Serif TC';">今日總計:</div>
@@ -271,6 +332,7 @@
         const staffList = ['Zee', 'Wen', 'Peter', 'Allen', 'Roni'];
         let fixedChange = "0";
         let fixedRefund = "0";
+        let extRowCount = 0; 
 
         function parseAndSetup() {
             const txt = document.getElementById('rawInput').value;
@@ -278,6 +340,9 @@
                 alert('請先貼上昨天的業績文字！');
                 return;
             }
+
+            // 先清空所有動態生成的欄位
+            document.getElementById('extConsultantContainer').innerHTML = "";
 
             // 1. 解析日期並+1天
             const dateMatch = txt.match(/中南區民雄廠(\d+)\/(\d+)回報/);
@@ -295,7 +360,7 @@
             fixedChange = (txt.match(/換約：(\d+)/) || ["", "0"])[1];
             fixedRefund = (txt.match(/退單：(\d+)/) || ["", "0"])[1];
 
-            // 3. 解析基礎累計值 (昨日 A+B 變成今日的 Base)
+            // 3. 解析基礎累計值 
             setupBaseValue(txt, /AP\s*：\s*(\d+)\+(\d+)/, 'v_ap_base');
             setupBaseValue(txt, /BR\s*：\s*(\d+)\+(\d+)/, 'v_br_base');
             setupBaseValue(txt, /WI\s*：\s*(\d+)\+(\d+)/, 'v_wi_base');
@@ -310,7 +375,7 @@
             const workPeopleMatch = txt.match(/上班人數：(\d+)/);
             if(workPeopleMatch) document.getElementById('v_work_people').value = workPeopleMatch[1];
 
-            // 5. 渲染個人業績輸入框 (數值強制設為 0 歸零)
+            // 5. 渲染本廠固定個人業績輸入框 (今日業績強制歸 0)
             const personalContainer = document.getElementById('personalContainer');
             personalContainer.innerHTML = '';
             
@@ -327,6 +392,20 @@
                 personalContainer.appendChild(row);
             });
 
+            // 👑 6. 全新聰明功能：自動捕捉昨日訊息裡的外廠顧問！
+            // 利用正則表達式，自動把除了固定 5 位以外，帶有 (廠館) 的顧問抓出來
+            const extRegex = /^([^\s：\(\)\xFF08\xFF09]+)[\(\xFF08]([^\)\xFF09]+)[\)\xFF09]\s*：\s*([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)/gm;
+            let match;
+            while ((match = extRegex.exec(txt)) !== null) {
+                let extName = match[1].trim();
+                let extFactory = match[2].trim();
+                
+                // 如果抓到的名字不屬於本廠 5 人，就自動幫他建立今天的歸零欄位
+                if (!staffList.includes(extName)) {
+                    addExtConsultantRowWithData(extName, extFactory);
+                }
+            }
+
             // 歸零今日新增填寫格
             document.querySelectorAll('input[id$="_add"]').forEach(el => el.value = "0");
 
@@ -341,9 +420,49 @@
             document.getElementById(elementId).value = match ? (parseInt(match[1]) + parseInt(match[2])) : 0;
         }
 
+        // 用於手動點擊「+新增外廠顧問業績」的按鈕
+        function addExtConsultantRow() {
+            addExtConsultantRowWithData("", "");
+        }
+
+        // 👑 核心優化：帶有參數的動態外廠生成函數（今日個積一律先預設為 0）
+        function addExtConsultantRowWithData(name, factory) {
+            extRowCount++;
+            const container = document.getElementById('extConsultantContainer');
+            const card = document.createElement('div');
+            card.className = 'ext-consultant-card';
+            card.id = `ext_row_${extRowCount}`;
+            
+            card.innerHTML = `
+                <button type="button" class="btn-delete-ext" onclick="removeExtRow(${extRowCount})">X</button>
+                <div class="ext-meta-inputs">
+                    <input type="text" class="ext-name" placeholder="外廠顧問名字 (例: Otis)" value="${name}" onclick="this.select();">
+                    <input type="text" class="ext-factory" placeholder="所屬廠館 (例: 嘉義)" value="${factory}" onclick="this.select();">
+                </div>
+                <div class="grid-5" style="margin-bottom:0;">
+                    <div style="font-size:12px; color:#8a8a8f; font-weight:bold;">輸入今日業績➔</div>
+                    <input type="number" step="0.5" class="p-single ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-renew ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-project ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-rejoin ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                </div>
+            `;
+            container.appendChild(card);
+            calculateTotal();
+        }
+
+        function removeExtRow(id) {
+            const el = document.getElementById(`ext_row_${id}`);
+            if(el) {
+                el.remove();
+                calculateTotal();
+            }
+        }
+
         function calculateTotal() {
             let fields = ['single', 'renew', 'project', 'rejoin'];
             let classes = ['.p-single', '.p-renew', '.p-project', '.p-rejoin'];
+            
             fields.forEach((f, index) => {
                 let sum = 0;
                 document.querySelectorAll(classes[index]).forEach(input => {
@@ -360,15 +479,38 @@
             const t_project = document.getElementById('tot_project').innerText;
             const t_rejoin = document.getElementById('tot_rejoin').innerText;
 
+            // 1. 本廠固定個積文字生成
             let personalText = '';
             staffList.forEach((name, index) => {
-                const s = document.querySelectorAll('.p-single')[index].value || 0;
-                const r = document.querySelectorAll('.p-renew')[index].value || 0;
-                const p = document.querySelectorAll('.p-project')[index].value || 0;
-                const j = document.querySelectorAll('.p-rejoin')[index].value || 0;
+                const s = document.querySelectorAll('#personalContainer .p-single')[index].value || 0;
+                const r = document.querySelectorAll('#personalContainer .p-renew')[index].value || 0;
+                const p = document.querySelectorAll('#personalContainer .p-project')[index].value || 0;
+                const j = document.querySelectorAll('#personalContainer .p-rejoin')[index].value || 0;
                 personalText += `${name}：${s}/${r}/${p}/${j}\n`;
             });
-            personalText = personalText.trim();
+
+            // 2. 外廠個積文字生成
+            let extText = '';
+            const extCards = document.querySelectorAll('#extConsultantContainer .ext-consultant-card');
+            extCards.forEach(card => {
+                const name = card.querySelector('.ext-name').value.trim();
+                const factory = card.querySelector('.ext-factory').value.trim();
+                
+                // 如果名字跟廠館都空著，就不輸出這筆
+                if(!name && !factory) return;
+                
+                const s = card.querySelector('.p-single').value || 0;
+                const r = card.querySelector('.p-renew').value || 0;
+                const p = card.querySelector('.p-project').value || 0;
+                const j = card.querySelector('.p-rejoin').value || 0;
+                extText += `${name}(${factory}）：${s}/${r}/${p}/${j}\n`;
+            });
+
+            let finalIndividualText = personalText;
+            if(extText) {
+                finalIndividualText += '\n' + extText;
+            }
+            finalIndividualText = finalIndividualText.trim();
 
             const workPeople = document.getElementById('v_work_people').value;
             
@@ -383,7 +525,7 @@
         單/續約/A專案/重入
 總計：${t_single}/${t_renew}/${t_project}/${t_rejoin}
 個積
-${personalText}
+${finalIndividualText}
 
 ===============
 換約：${fixedChange}
