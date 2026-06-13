@@ -7,13 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Noto+Serif+TC:wght=500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* 全站黑金風格 */
+        /* 全站黑金風格與強制宋體設定 */
         * {
             box-sizing: border-box;
+            font-family: 'Noto Serif TC', 'PMingLiU', 'MingLiU', 'Apple LiSung', 'Songti TC', serif !important;
         }
         
         body {
-            font-family: 'Noto Serif TC', 'SimSun', '宋體', serif !important;
             background-color: #0b0b0c; /* 奢華微光黑 */
             color: #e2e8f0;
             padding: 20px 15px;
@@ -23,7 +23,7 @@
         }
         
         h2 {
-            font-family: 'Cinzel', 'Noto Serif TC', serif !important;
+            font-family: 'Cinzel', 'Noto Serif TC', 'PMingLiU', 'Songti TC', serif !important;
             color: #c5a880; /* 香檳金 */
             text-align: center;
             letter-spacing: 3px;
@@ -85,7 +85,6 @@
         textarea {
             width: 100%;
             height: 110px;
-            font-family: 'Noto Serif TC', serif !important;
             background-color: #0b0b0c;
             color: #ffffff;
             border: 1px solid #2c2c2e;
@@ -110,9 +109,9 @@
             border: 1px solid #2c2c2e;
             font-size: 15px;
             text-align: center;
-            font-family: 'Noto Serif TC', serif !important;
             transition: all 0.3s;
             border-radius: 0px;
+            line-height: 1.5;
         }
         input:focus {
             border-color: #c5a880;
@@ -134,7 +133,6 @@
             margin-bottom: 12px;
         }
         .grid-header {
-            font-family: 'Noto Serif TC', serif !important;
             font-weight: bold;
             text-align: center;
             font-size: 0.85rem;
@@ -145,7 +143,6 @@
         .grid-header:first-child { text-align: left; }
         
         .staff-name {
-            font-family: 'Cinzel', 'Noto Serif TC', serif !important;
             font-weight: bold;
             color: #ffffff;
             font-size: 14px;
@@ -210,8 +207,15 @@
             font-weight: bold;
             color: #c5a880;
             margin-top: 20px;
-            font-family: 'Cinzel', 'Noto Serif TC', serif !important;
             background-color: rgba(197, 168, 128, 0.03);
+        }
+
+        /* 備註累積數字提示小字 */
+        .base-hint {
+            color: #8a8a8f;
+            font-size: 0.8rem;
+            font-weight: normal;
+            margin-left: 4px;
         }
 
         /* 按鈕：經典黑金方塊 */
@@ -221,7 +225,6 @@
             border: none;
             padding: 15px;
             font-size: 16px;
-            font-family: 'Noto Serif TC', serif !important;
             cursor: pointer;
             width: 100%;
             font-weight: 700;
@@ -286,7 +289,7 @@
 
         <div class="form-group total-row">
             <div class="grid-5" style="margin-bottom: 0;">
-                <div style="color: #ffffff; font-family:'Noto Serif TC';">今日總計:</div>
+                <div style="color: #ffffff;">今日總計:</div>
                 <div id="tot_single" style="text-align: center; font-size: 1.05rem;">0</div>
                 <div id="tot_renew" style="text-align: center; font-size: 1.05rem;">0</div>
                 <div id="tot_project" style="text-align: center; font-size: 1.05rem;">0</div>
@@ -302,27 +305,27 @@
         </div>
         
         <label>備註各項目累積進度 (填寫今日新增)：</label>
-        <div class="grid-5" style="grid-template-columns: 1.4fr 1fr; max-width: 450px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
-            <div style="font-size:0.85rem; color:#666666;">項目 (昨日累積 + )</div>
+        <div class="grid-5" style="grid-template-columns: 1.6fr 1fr; max-width: 480px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
+            <div style="font-size:0.85rem; color:#666666;">項目 <span style="color:#8a8a8f;">(昨日累計)</span></div>
             <div style="font-size:0.85rem; color:#c5a880; text-align:center;">今日新增</div>
             
-            <div>AP ：</div><td><input type="number" id="v_ap_add" value="0" onclick="this.select();"><input type="hidden" id="v_ap_base"></td>
-            <div>BR ：</div><td><input type="number" id="v_br_add" value="0" onclick="this.select();"><input type="hidden" id="v_br_base"></td>
-            <div>WI ：</div><td><input type="number" id="v_wi_add" value="0" onclick="this.select();"><input type="hidden" id="v_wi_base"></td>
-            <div>VIP：</div><td><input type="number" id="v_vip_add" value="0" onclick="this.select();"><input type="hidden" id="v_vip_base"></td>
+            <div>AP <span id="lbl_ap_base" class="base-hint"></span>：</div><td><input type="number" id="v_ap_add" value="0" onclick="this.select();"><input type="hidden" id="v_ap_base"></td>
+            <div>BR <span id="lbl_br_base" class="base-hint"></span>：</div><td><input type="number" id="v_br_add" value="0" onclick="this.select();"><input type="hidden" id="v_br_base"></td>
+            <div>WI <span id="lbl_wi_base" class="base-hint"></span>：</div><td><input type="number" id="v_wi_add" value="0" onclick="this.select();"><input type="hidden" id="v_wi_base"></td>
+            <div>VIP <span id="lbl_vip_base" class="base-hint"></span>：</div><td><input type="number" id="v_vip_add" value="0" onclick="this.select();"><input type="hidden" id="v_vip_base"></td>
         </div>
 
         <br>
 
-        <div class="grid-5" style="grid-template-columns: 1.4fr 1fr; max-width: 450px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
-            <div style="font-size:0.85rem; color:#666666;">項目 (昨日累積 + )</div>
+        <div class="grid-5" style="grid-template-columns: 1.6fr 1fr; max-width: 480px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
+            <div style="font-size:0.85rem; color:#666666;">項目 <span style="color:#8a8a8f;">(昨日累計)</span></div>
             <div style="font-size:0.85rem; color:#c5a880; text-align:center;">今日新增</div>
             
-            <div>重新入會：</div><td><input type="number" id="v_re_add" value="0" onclick="this.select();"><input type="hidden" id="v_re_base"></td>
-            <div>續約：</div><td><input type="number" id="v_un_add" value="0" onclick="this.select();"><input type="hidden" id="v_un_base"></td>
-            <div>推薦名單數：</div><td><input type="number" id="v_ref_add" value="0" onclick="this.select();"><input type="hidden" id="v_ref_base"></td>
-            <div>限定活動數：</div><td><input type="number" id="v_act_add" value="0" onclick="this.select();"><input type="hidden" id="v_act_base"></td>
-            <div>續不綁/轉續年：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
+            <div>重新入會 <span id="lbl_re_base" class="base-hint"></span>：</div><td><input type="number" id="v_re_add" value="0" onclick="this.select();"><input type="hidden" id="v_re_base"></td>
+            <div>續約 <span id="lbl_un_base" class="base-hint"></span>：</div><td><input type="number" id="v_un_add" value="0" onclick="this.select();"><input type="hidden" id="v_un_base"></td>
+            <div>推薦名單數 <span id="lbl_ref_base" class="base-hint"></span>：</div><td><input type="number" id="v_ref_add" value="0" onclick="this.select();"><input type="hidden" id="v_ref_base"></td>
+            <div>限定活動數 <span id="lbl_act_base" class="base-hint"></span>：</div><td><input type="number" id="v_act_add" value="0" onclick="this.select();"><input type="hidden" id="v_act_base"></td>
+            <div>續不綁/轉續年 <span id="lbl_not_base" class="base-hint"></span>：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
         </div>
 
         <button onclick="generateAndCopy()" style="margin-top: 35px;">一鍵複製今日業績</button>
@@ -359,16 +362,16 @@
             fixedChange = (txt.match(/換約：(\d+)/) || ["", "0"])[1];
             fixedRefund = (txt.match(/退單：(\d+)/) || ["", "0"])[1];
 
-            // 3. 解析基礎累計值 
-            setupBaseValue(txt, /AP\s*：\s*(\d+)\+(\d+)/, 'v_ap_base');
-            setupBaseValue(txt, /BR\s*：\s*(\d+)\+(\d+)/, 'v_br_base');
-            setupBaseValue(txt, /WI\s*：\s*(\d+)\+(\d+)/, 'v_wi_base');
-            setupBaseValue(txt, /VIP\s*：\s*(\d+)\+(\d+)/, 'v_vip_base');
-            setupBaseValue(txt, /重新入會：\s*(\d+)\+(\d+)/, 'v_re_base');
-            setupBaseValue(txt, /續約：\s*(\d+)\+(\d+)/, 'v_un_base');
-            setupBaseValue(txt, /推薦名單數：\s*(\d+)\+(\d+)/, 'v_ref_base');
-            setupBaseValue(txt, /限定活動數：\s*(\d+)\+(\d+)/, 'v_act_base');
-            setupBaseValue(txt, /續不綁約\/轉續年約：\s*(\d+)\+(\d+)/, 'v_not_base');
+            // 3. 👑 解析基礎累計值，並動態將加總數字更新到標籤畫面上
+            setupBaseValue(txt, /AP\s*：\s*(\d+)\+(\d+)/, 'v_ap_base', 'lbl_ap_base');
+            setupBaseValue(txt, /BR\s*：\s*(\d+)\+(\d+)/, 'v_br_base', 'lbl_br_base');
+            setupBaseValue(txt, /WI\s*：\s*(\d+)\+(\d+)/, 'v_wi_base', 'lbl_wi_base');
+            setupBaseValue(txt, /VIP\s*：\s*(\d+)\+(\d+)/, 'v_vip_base', 'lbl_vip_base');
+            setupBaseValue(txt, /重新入會：\s*(\d+)\+(\d+)/, 'v_re_base', 'lbl_re_base');
+            setupBaseValue(txt, /續約：\s*(\d+)\+(\d+)/, 'v_un_base', 'lbl_un_base');
+            setupBaseValue(txt, /推薦名單數：\s*(\d+)\+(\d+)/, 'v_ref_base', 'lbl_ref_base');
+            setupBaseValue(txt, /限定活動數：\s*(\d+)\+(\d+)/, 'v_act_base', 'lbl_act_base');
+            setupBaseValue(txt, /續不綁約\/轉續年約：\s*(\d+)\+(\d+)/, 'v_not_base', 'lbl_not_base');
 
             // 4. 解析上班人數
             const workPeopleMatch = txt.match(/上班人數：(\d+)/);
@@ -411,9 +414,20 @@
             document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function setupBaseValue(text, regex, elementId) {
+        // 👑 升級解析邏輯：解析出昨日基礎與昨日新增，加總後寫入提示標籤
+        function setupBaseValue(text, regex, elementId, labelId) {
             const match = text.match(regex);
-            document.getElementById(elementId).value = match ? (parseInt(match[1]) + parseInt(match[2])) : 0;
+            if (match) {
+                let part1 = parseInt(match[1]) || 0;
+                let part2 = parseInt(match[2]) || 0;
+                let totalYesterday = part1 + part2;
+                
+                document.getElementById(elementId).value = totalYesterday;
+                document.getElementById(labelId).innerText = `(${totalYesterday})`;
+            } else {
+                document.getElementById(elementId).value = 0;
+                document.getElementById(labelId).innerText = `(0)`;
+            }
         }
 
         function addExtConsultantRow() {
@@ -430,8 +444,8 @@
             card.innerHTML = `
                 <button type="button" class="btn-delete-ext" onclick="removeExtRow(${extRowCount})">X</button>
                 <div class="ext-meta-inputs">
-                    <input type="text" class="ext-name" placeholder="外廠顧問名字 (例: Otis)" value="${name}" onclick="this.select();">
-                    <input type="text" class="ext-factory" placeholder="所屬廠館 (例: 嘉義)" value="${factory}" onclick="this.select();">
+                    <input type="text" class="ext-name" placeholder="外廠顧問名字" value="${name}" onclick="this.select();">
+                    <input type="text" class="ext-factory" placeholder="所屬廠館" value="${factory}" onclick="this.select();">
                 </div>
                 <div class="grid-5" style="margin-bottom:0;">
                     <div style="font-size:12px; color:#8a8a8f; font-weight:bold;">輸入今日業績➔</div>
@@ -453,7 +467,6 @@
             }
         }
 
-        // 👑 升級核心：計算總計，並將「重入、續約」的加總同步填入下方的今日新增
         function calculateTotal() {
             let fields = ['single', 'renew', 'project', 'rejoin'];
             let classes = ['.p-single', '.p-renew', '.p-project', '.p-rejoin'];
@@ -469,11 +482,10 @@
                 document.getElementById(`tot_${f}`).innerText = sum;
             });
 
-            // 👑 自動連動功能：
-            // 將「重入總計 (rejoin)」的值，同步塞給底下「重新入會今日新增 (v_re_add)」
+            // 連動重入 ➔ 重新入會今日新增
             document.getElementById('v_re_add').value = sums['rejoin'];
 
-            // 將「續約總計 (renew)」的值，同步塞給底下「續約今日新增 (v_un_add)」
+            // 連動續約 ➔ 續約今日新增
             document.getElementById('v_un_add').value = sums['renew'];
         }
 
