@@ -3,29 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>未成交回報系統</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Noto+Serif+TC:wght=500;700&display=swap" rel="stylesheet">
+    <title>中南區民雄廠 - 業績回報系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* 全站黑金風格 - 強制全域套用思源宋體 */
-        * {
-            font-family: 'Noto Serif TC', 'Songti TC', 'SimSun', 'Georgia', serif !important;
-            box-sizing: border-box;
-        }
-
+        /* 全站黑金風格 */
         body {
+            font-family: 'Noto Serif TC', 'SimSun', '宋體', serif;
             background-color: #0b0b0c; /* 奢華微光黑 */
             color: #e2e8f0;
             padding: 20px 15px;
-            max-width: 550px;
+            max-width: 650px;
             margin: 0 auto;
-            -webkit-font-smoothing: antialiased;
         }
         
         h2 {
-            font-family: 'Cinzel', 'Noto Serif TC', 'Songti TC', serif !important;
+            font-family: 'Cinzel', 'Noto Serif TC', serif;
             color: #c5a880; /* 香檳金 */
             text-align: center;
             letter-spacing: 3px;
@@ -43,8 +36,15 @@
             border-bottom: 1px solid #222224;
             padding-bottom: 15px;
         }
+        
+        h3 {
+            color: #c5a880;
+            margin-top: 0;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
 
-        /* 金色 L 型對角線框容器 */
+        /* 金色 L 型對角線框 */
         .section {
             background: #111112; 
             padding: 25px 20px;
@@ -52,10 +52,12 @@
             position: relative;
             border: 1px solid #1c1c1e;
         }
+        /* 左上角金邊 */
         .section::before {
             content: ''; position: absolute; top: 8px; left: 8px; width: 12px; height: 12px;
             border-top: 2px solid #c5a880; border-left: 2px solid #c5a880; opacity: 0.7;
         }
+        /* 右下角金邊 */
         .section::after {
             content: ''; position: absolute; bottom: 8px; right: 8px; width: 12px; height: 12px;
             border-bottom: 2px solid #c5a880; border-right: 2px solid #c5a880; opacity: 0.7;
@@ -65,201 +67,119 @@
             margin-bottom: 20px;
         }
 
-        .date-consultant-group {
-            display: grid;
-            grid-template-columns: 4.8fr 5.2fr; 
-            gap: 12px;
-            margin-bottom: 20px;
-            align-items: flex-end;
-        }
-        .date-consultant-group .form-group {
-            margin-bottom: 0;
-        }
-
         label {
             display: block;
-            font-weight: 700;
+            font-weight: bold;
             margin-bottom: 8px;
-            color: #c5a880; 
+            color: #c5a880; /* 金色標籤 */
             font-size: 0.9rem;
             letter-spacing: 1px;
         }
 
-        label .required {
-            color: #ff5252;
-            margin-left: 4px;
+        /* 輸入框與文字框 */
+        textarea {
+            width: 100%;
+            height: 110px;
+            font-family: 'Noto Serif TC', serif;
+            background-color: #0b0b0c;
+            color: #ffffff;
+            border: 1px solid #2c2c2e;
+            padding: 12px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        textarea:focus {
+            border-color: #c5a880;
+            outline: none;
+            box-shadow: 0 0 8px rgba(197, 168, 128, 0.2);
         }
 
-        /* 解除 iOS 瀏覽器對輸入框字體的頑強控制 */
-        input[type="text"], input[type="date"], input[type="number"], select, textarea {
-            -webkit-appearance: none; 
-            -moz-appearance: none;
-            appearance: none;
+        input[type="text"], input[type="number"] {
             width: 100%;
-            padding: 11px 10px;
+            padding: 10px;
             background-color: #0b0b0c;
-            color: #ffffff !important;
+            color: #ffffff;
             border: 1px solid #2c2c2e;
             box-sizing: border-box;
-            font-size: 14px; 
+            font-size: 15px;
+            text-align: center;
+            font-family: 'Noto Serif TC', serif;
             transition: all 0.3s;
-            border-radius: 0px; 
         }
-        
-        input[type="date"] {
-            font-size: 13.5px; 
-            padding: 10px 8px;
-            min-height: 43px;
-        }
-        
-        select {
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%23c5a880' d='M0 0l5 6 5-6z'/></svg>");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 10px 6px;
-            padding-right: 30px; 
-        }
-
-        input:focus, select:focus, textarea:focus {
+        input:focus {
             border-color: #c5a880;
             outline: none;
             box-shadow: 0 0 10px rgba(197, 168, 128, 0.3);
         }
-
-        input.error, textarea.error {
-            border-color: #ff5252 !important;
-            box-shadow: 0 0 10px rgba(255, 82, 82, 0.3) !important;
+        input[readonly] {
+            background-color: #1a1a1c !important;
+            color: #666666;
+            border-color: #1a1a1c;
         }
 
-        /* 五欄業績並排輸入框網格 */
-        .performance-grid {
+        /* 業績網格排版 */
+        .grid-5 {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
             gap: 8px;
-            margin-top: 5px;
+            align-items: center;
+            margin-bottom: 12px;
         }
-        .performance-grid div {
-            text-align: center;
-        }
-        .performance-grid span {
-            font-size: 11px;
-            color: #8a8a8f;
-            display: block;
-            margin-bottom: 4px;
-        }
-        .performance-grid input {
-            text-align: center;
-            padding: 8px 4px;
-        }
-
-        /* 外廠顧問動態卡片樣式 */
-        .ext-card {
-            background: #171719;
-            border: 1px dashed #c5a880;
-            padding: 15px;
-            margin-bottom: 15px;
-            position: relative;
-        }
-        .ext-card-header {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .delete-ext-btn {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: #ff5252;
-            color: #ffffff;
-            border: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 12px;
+        .grid-header {
+            font-family: 'Noto Serif TC', serif;
             font-weight: bold;
-            line-height: 22px;
             text-align: center;
-            padding: 0;
+            font-size: 0.85rem;
+            color: #8a8a8f;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #2c2c2e;
         }
-
-        /* 快捷鍵 */
-        .quick-tags {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
-        .tag {
-            font-size: 12px;
-            background-color: rgba(197, 168, 128, 0.05);
-            color: #c5a880;
-            border: 1px solid rgba(197, 168, 128, 0.2);
-            padding: 4px 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .tag:hover {
-            background-color: #c5a880;
-            color: #0b0b0c;
-        }
-
-        /* 按鈕風格 */
-        .add-ext-btn {
-            width: 100%;
-            background-color: transparent;
-            color: #c5a880;
-            border: 1px solid #c5a880;
-            padding: 12px;
+        .grid-header:first-child { text-align: left; }
+        
+        .staff-name {
+            font-family: 'Cinzel', 'Noto Serif TC', serif;
+            font-weight: bold;
+            color: #ffffff;
             font-size: 14px;
-            cursor: pointer;
-            font-weight: 700;
-            margin-top: 5px;
-            margin-bottom: 20px;
-            transition: all 0.2s;
-        }
-        .add-ext-btn:hover {
-            background-color: rgba(197, 168, 128, 0.1);
+            letter-spacing: 1px;
         }
 
-        .btn-group {
-            display: flex;
-            gap: 14px;
-            margin-top: 30px;
+        /* 總計區塊 */
+        .total-row {
+            border: 1px solid #c5a880;
+            padding: 14px 12px;
+            font-weight: bold;
+            color: #c5a880;
+            margin-top: 20px;
+            font-family: 'Cinzel', 'Noto Serif TC', serif;
+            background-color: rgba(197, 168, 128, 0.03);
         }
 
-        .submit-btn {
-            flex: 2.5;
-            background-color: #c5a880; 
-            color: #0b0b0c; 
+        /* 按鈕：經典黑金方塊 */
+        button {
+            background-color: #c5a880; /* 金底 */
+            color: #0b0b0c; /* 黑字 */
             border: none;
             padding: 15px;
             font-size: 16px;
+            font-family: 'Noto Serif TC', serif;
             cursor: pointer;
+            width: 100%;
             font-weight: 700;
             letter-spacing: 2px;
             transition: all 0.2s ease;
         }
-        .submit-btn:hover {
+        button:hover {
             background-color: #0b0b0c;
             color: #c5a880;
             outline: 1px solid #c5a880;
         }
 
-        .reset-btn {
-            flex: 1;
-            background-color: transparent;
-            color: #8a8a8f;
-            border: 1px solid #2c2c2e;
-            padding: 15px;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .reset-btn:hover {
-            color: #ffffff;
-            border-color: #ffffff;
+        .hint {
+            font-size: 0.8em;
+            color: #666666;
+            margin-top: 6px;
         }
         
         hr {
@@ -271,377 +191,222 @@
 </head>
 <body>
 
-    <h2>❌未成交回報❌</h2>
-    <div class="sub-title">中南區民雄廠 ˙ 客戶追蹤系統</div>
+    <h2>RONI FITNESS FACTORY</h2>
+    <div class="sub-title">中南區民雄廠 ˙ 業績回報系統</div>
 
-    <form id="reportForm" class="section">
+    <div class="section">
+        <label for="rawInput">1. 請貼上「昨天」的 LINE 業績文字：</label>
+        <textarea id="rawInput" placeholder="請在此處貼上昨天群組的最後一則回報訊息..."></textarea>
+        <button onclick="parseAndSetup()">解析文字 ➔ 生成今日表單</button>
+    </div>
+
+    <div id="formContainer" class="section" style="display:none;">
+        <h3>2. 填寫今日營業成果</h3>
+        <br>
         
-        <div class="date-consultant-group">
-            <div class="form-group">
-                <label>1. 日期</label>
-                <input type="date" id="q1_date">
-            </div>
-            <div class="form-group">
-                <label>顧問</label>
-                <select id="q1_consultant" onchange="saveConsultant(this.value)">
-                    <option value="Zee">Zee</option>
-                    <option value="Wen">Wen</option>
-                    <option value="Peter">Peter</option>
-                    <option value="Allen">Allen</option>
-                    <option value="Roni">Roni</option>
-                </select>
-            </div>
-        </div>
-
         <div class="form-group">
-            <label>2. 姓名<span class="required">*</span></label>
-            <input type="text" id="q2" placeholder="請輸入訪客姓名" oninput="this.classList.remove('error')">
-        </div>
-
-        <div class="form-group">
-            <label>3. 來源</label>
-            <select id="q3" onchange="handleSourceChange(this.value)">
-                <option value="APT">APT</option>
-                <option value="BR">BR</option>
-                <option value="WI">WI</option>
-                <option value="推薦體驗">推薦體驗</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>4. 推薦名單是否</label>
-            <select id="q4">
-                <option value="否" selected>否</option>
-                <option value="是">是</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>5. 住家在哪/車程</label>
-            <input type="text" id="q5" placeholder="例：民雄鄉 / 車程 10 分鐘">
-            <div class="quick-tags">
-                <span class="tag" onclick="fillField('q5', '民雄鄉')">民雄鄉</span>
-                <span class="tag" onclick="fillField('q5', '大林鎮')">大林鎮</span>
-                <span class="tag" onclick="fillField('q5', '中正大學附近')">中正大學附近</span>
-                <span class="tag" onclick="fillField('q5', '溪口鄉')">溪口鄉</span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>6. 公司在哪/職業</label>
-            <input type="text" id="q6" placeholder="例：大林鎮 / 辦公室內勤">
-            <div class="quick-tags">
-                <span class="tag" onclick="fillField('q6', '民雄鄉')">民雄鄉</span>
-                <span class="tag" onclick="fillField('q6', '大林鎮')">大林鎮</span>
-                <span class="tag" onclick="fillField('q6', '中正大學附近')">中正大學附近</span>
-                <span class="tag" onclick="fillField('q6', '頭橋工業區')">頭橋工業區</span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>7. 運動時段</label>
-            <input type="text" id="q7" placeholder="例：下班後 19:00 左右">
-        </div>
-
-        <div class="form-group">
-            <label>8. 有無健身房經驗</label>
-            <input type="text" id="q8" placeholder="例：無，曾自主慢跑一年">
-        </div>
-
-        <div class="form-group">
-            <label>9. 從哪出發來健身路程/車程</label>
-            <input type="text" id="q9" placeholder="例：從公司過來約 15 分鐘">
-        </div>
-
-        <hr>
-
-        <div class="form-group">
-            <label>10. 今天來看健身房需求/動機<span class="required">*</span></label>
-            <textarea id="q10" placeholder="例：想減脂、增肌..." oninput="this.classList.remove('error')"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>11. 未成交原因/訪客問題<span class="required">*</span></label>
-            <textarea id="q11" placeholder="例：價格稍微超出預期..." oninput="this.classList.remove('error')"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>12. 體驗天數</label>
-            <select id="q12">
-                <option value="無">無</option>
-                <option value="1+3">1+3</option>
-                <option value="1+7">1+7</option>
-                <option value="14">14</option>
-                <option value="30">30</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>13. 未開體驗原因</label>
-            <select id="q13_select" onchange="toggleReasonInput(this.value)">
-                <option value="無">無</option>
-                <option value="custom">輸入原因</option>
-            </select>
-            <div id="q13_custom_container" class="conditional-input">
-                <input type="text" id="q13_custom_input" placeholder="請打字輸入未開體驗的具體原因">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>14. 何時確認入會意願</label>
-            <input type="text" id="q14" placeholder="例：預計下週一電話追蹤確認">
+            <label>回報日期：</label>
+            <input type="text" id="reportDate" style="max-width: 280px; text-align: left;">
+            <div class="hint">（系統已自動推算加 1 天）</div>
         </div>
 
         <hr>
         
-        <label>👑 本廠顧問今日業績</label>
+        <label>個積填寫 (今日個積已強制歸零)：</label>
+        <div class="grid-5">
+            <div class="grid-header">名字</div>
+            <div class="grid-header">新單</div>
+            <div class="grid-header">續約</div>
+            <div class="grid-header">A專案</div>
+            <div class="grid-header">重入</div>
+        </div>
         
-        <div id="localPerformanceSection">
+        <div id="personalContainer"></div>
+
+        <div class="form-group total-row">
+            <div class="grid-5" style="margin-bottom: 0;">
+                <div style="color: #ffffff; font-family:'Noto Serif TC';">今日總計:</div>
+                <div id="tot_single" style="text-align: center; font-size: 1.05rem;">0</div>
+                <div id="tot_renew" style="text-align: center; font-size: 1.05rem;">0</div>
+                <div id="tot_project" style="text-align: center; font-size: 1.05rem;">0</div>
+                <div id="tot_rejoin" style="text-align: center; font-size: 1.05rem;">0</div>
             </div>
+        </div>
 
         <hr>
 
-        <label>外廠顧問跨廠開單業績</label>
-        <div id="extPerformanceContainer">
-            </div>
-        <button type="button" class="add-ext-btn" onclick="addExtConsultantRow()">＋ 新增外廠顧問業績</button>
-
-        <div class="btn-group">
-            <button type="button" class="reset-btn" onclick="resetForm()">清空欄位</button>
-            <button type="button" class="submit-btn" onclick="copyAndGoToLine()">完成並複製到剪貼簿</button>
+        <div class="form-group" style="max-width: 220px;">
+            <label>上班人數：</label>
+            <input type="number" id="v_work_people" value="0" onclick="this.select();">
+        </div>
+        
+        <label>備註各項目累積進度 (填寫今日新增)：</label>
+        <div class="grid-5" style="grid-template-columns: 1.4fr 1fr; max-width: 450px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
+            <div style="font-size:0.85rem; color:#666666;">項目 (昨日累積 + )</div>
+            <div style="font-size:0.85rem; color:#c5a880; text-align:center;">今日新增</div>
+            
+            <div>AP ：</div><td><input type="number" id="v_ap_add" value="0" onclick="this.select();"><input type="hidden" id="v_ap_base"></td>
+            <div>BR ：</div><td><input type="number" id="v_br_add" value="0" onclick="this.select();"><input type="hidden" id="v_br_base"></td>
+            <div>WI ：</div><td><input type="number" id="v_wi_add" value="0" onclick="this.select();"><input type="hidden" id="v_wi_base"></td>
+            <div>VIP：</div><td><input type="number" id="v_vip_add" value="0" onclick="this.select();"><input type="hidden" id="v_vip_base"></td>
         </div>
 
-    </form>
+        <br>
+
+        <div class="grid-5" style="grid-template-columns: 1.4fr 1fr; max-width: 450px; padding: 12px; border: 1px solid #2c2c2e; background-color: #0f0f10;">
+            <div style="font-size:0.85rem; color:#666666;">項目 (昨日累積 + )</div>
+            <div style="font-size:0.85rem; color:#c5a880; text-align:center;">今日新增</div>
+            
+            <div>重新入會：</div><td><input type="number" id="v_re_add" value="0" onclick="this.select();"><input type="hidden" id="v_re_base"></td>
+            <div>續約：</div><td><input type="number" id="v_un_add" value="0" onclick="this.select();"><input type="hidden" id="v_un_base"></td>
+            <div>推薦名單數：</div><td><input type="number" id="v_ref_add" value="0" onclick="this.select();"><input type="hidden" id="v_ref_base"></td>
+            <div>限定活動數：</div><td><input type="number" id="v_act_add" value="0" onclick="this.select();"><input type="hidden" id="v_act_base"></td>
+            <div>續不綁/轉續年：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
+        </div>
+
+        <button onclick="generateAndCopy()" style="margin-top: 35px;">一鍵複製今日業績</button>
+    </div>
 
     <script>
-        // 定義本廠固定名單
-        const localConsultants = ["Zee", "Wen", "Peter", "Allen", "Roni"];
-        let extCount = 0;
+        const staffList = ['Zee', 'Wen', 'Peter', 'Allen', 'Roni'];
+        let fixedChange = "0";
+        let fixedRefund = "0";
 
-        window.onload = function() {
-            let today = new Date();
-            let dd = String(today.getDate()).padStart(2, '0');
-            let mm = String(today.getMonth() + 1).padStart(2, '0');
-            let yyyy = today.getFullYear();
-            document.getElementById('q1_date').value = yyyy + '-' + mm + '-' + dd;
-
-            let savedConsultant = localStorage.getItem('selectedConsultant');
-            if (savedConsultant) {
-                document.getElementById('q1_consultant').value = savedConsultant;
-            }
-
-            // 初始化生成本廠業績輸入欄位
-            renderLocalPerformance();
-        };
-
-        // 生成本廠固定 5 位顧問的業績輸入框
-        function renderLocalPerformance() {
-            const container = document.getElementById("localPerformanceSection");
-            container.innerHTML = "";
-            localConsultants.forEach(name => {
-                let div = document.createElement("div");
-                div.className = "form-group";
-                div.style.marginBottom = "15px";
-                div.innerHTML = `
-                    <span style="font-size:13px; color:#c5a880; font-weight:bold;">${name} ：</span>
-                    <div class="performance-grid" data-name="${name}">
-                        <div><span>單</span><input type="number" step="0.5" class="p-dan" value="0"></div>
-                        <div><span>續約</span><input type="number" step="0.5" class="p-xu" value="0"></div>
-                        <div><span>A專案</span><input type="number" step="0.5" class="p-a" value="0"></div>
-                        <div><span>重入</span><input type="number" step="0.5" class="p-chong" value="0"></div>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // 動態新增外廠顧問業績卡片
-        function addExtConsultantRow() {
-            extCount++;
-            const container = document.getElementById("extPerformanceContainer");
-            let card = document.createElement("div");
-            card.className = "ext-card";
-            card.id = `ext_card_${extCount}`;
-            card.innerHTML = `
-                <button type="button" class="delete-ext-btn" onclick="removeExtCard(${extCount})">X</button>
-                <div class="ext-card-header">
-                    <div>
-                        <input type="text" class="ext-name" placeholder="顧問名稱(如:Otis)" style="padding: 8px;">
-                    </div>
-                    <div>
-                        <input type="text" class="ext-factory" placeholder="所屬廠館(如:嘉義)" style="padding: 8px;">
-                    </div>
-                </div>
-                <div class="performance-grid">
-                    <div><span>單</span><input type="number" step="0.5" class="p-dan" value="0"></div>
-                    <div><span>續約</span><input type="number" step="0.5" class="p-xu" value="0"></div>
-                    <div><span>A專案</span><input type="number" step="0.5" class="p-a" value="0"></div>
-                    <div><span>重入</span><input type="number" step="0.5" class="p-chong" value="0"></div>
-                </div>
-            `;
-            container.appendChild(card);
-        }
-
-        function removeExtCard(id) {
-            const card = document.getElementById(`ext_card_${id}`);
-            if(card) card.remove();
-        }
-
-        function handleSourceChange(val) {
-            let q4Select = document.getElementById("q4");
-            if(val === "推薦體驗") {
-                q4Select.value = "是";
-            } else {
-                q4Select.value = "否";
-            }
-        }
-
-        function saveConsultant(val) {
-            localStorage.setItem('selectedConsultant', val);
-        }
-
-        function fillField(id, val) {
-            document.getElementById(id).value = val;
-        }
-
-        function toggleReasonInput(val) {
-            let container = document.getElementById("q13_custom_container");
-            if(val === "custom") {
-                container.style.display = "block";
-                document.getElementById("q13_custom_input").focus();
-            } else {
-                container.style.display = "none";
-                document.getElementById("q13_custom_input").value = ""; 
-            }
-        }
-
-        function resetForm() {
-            if(confirm("確定要清空目前填寫的所有內容嗎？")) {
-                document.getElementById("reportForm").reset();
-                let today = new Date();
-                document.getElementById('q1_date').value = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-                let savedConsultant = localStorage.getItem('selectedConsultant');
-                if (savedConsultant) document.getElementById('q1_consultant').value = savedConsultant;
-                
-                document.getElementById("q13_custom_container").style.display = "none";
-                document.getElementById("extPerformanceContainer").innerHTML = "";
-                renderLocalPerformance();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        function copyAndGoToLine() {
-            let q2 = document.getElementById("q2");
-            let q10 = document.getElementById("q10");
-            let q11 = document.getElementById("q11");
-            let hasError = false;
-
-            if(!q2.value.trim()) { q2.classList.add('error'); hasError = true; }
-            if(!q10.value.trim()) { q10.classList.add('error'); hasError = true; }
-            if(!q11.value.trim()) { q11.classList.add('error'); hasError = true; }
-
-            if(hasError) {
-                alert("請填寫標記有紅星(*)的核心必填欄位喔！");
+        function parseAndSetup() {
+            const txt = document.getElementById('rawInput').value;
+            if(!txt.trim()){
+                alert('請先貼上昨天的業績文字！');
                 return;
             }
 
-            let dateVal = document.getElementById("q1_date").value;
-            // 轉換日期格式顯示成 5/28 樣式
-            let displayDate = "";
-            if(dateVal) {
-                let dParts = dateVal.split('-');
-                if(dParts.length === 3) displayDate = parseInt(dParts[1]) + "/" + parseInt(dParts[2]);
-            }
-            
-            let consultantVal = document.getElementById("q1_consultant").value;
-            
-            let q13Select = document.getElementById("q13_select").value;
-            let q13FinalValue = "無";
-            if(q13Select === "custom") {
-                let customInput = document.getElementById("q13_custom_input").value.trim();
-                q13FinalValue = customInput ? customInput : "無"; 
+            // 1. 解析日期並+1天
+            const dateMatch = txt.match(/中南區民雄廠(\d+)\/(\d+)回報/);
+            if(dateMatch) {
+                let month = parseInt(dateMatch[1]);
+                let day = parseInt(dateMatch[2]);
+                let dateObj = new Date(2026, month - 1, day);
+                dateObj.setDate(dateObj.getDate() + 1);
+                document.getElementById('reportDate').value = `中南區民雄廠${dateObj.getMonth() + 1}/${dateObj.getDate()}回報`;
+            } else {
+                document.getElementById('reportDate').value = "中南區民雄廠6/14回報";
             }
 
-            // 👑 計算業績與加總
-            let totalDan = 0, totalXu = 0, totalA = 0, totalChong = 0;
+            // 2. 解析固定欄位
+            fixedChange = (txt.match(/換約：(\d+)/) || ["", "0"])[1];
+            fixedRefund = (txt.match(/退單：(\d+)/) || ["", "0"])[1];
+
+            // 3. 解析基礎累計值 (昨日 A+B 變成今日的 Base)
+            setupBaseValue(txt, /AP\s*：\s*(\d+)\+(\d+)/, 'v_ap_base');
+            setupBaseValue(txt, /BR\s*：\s*(\d+)\+(\d+)/, 'v_br_base');
+            setupBaseValue(txt, /WI\s*：\s*(\d+)\+(\d+)/, 'v_wi_base');
+            setupBaseValue(txt, /VIP\s*：\s*(\d+)\+(\d+)/, 'v_vip_base');
+            setupBaseValue(txt, /重新入會：\s*(\d+)\+(\d+)/, 'v_re_base');
+            setupBaseValue(txt, /續約：\s*(\d+)\+(\d+)/, 'v_un_base');
+            setupBaseValue(txt, /推薦名單數：\s*(\d+)\+(\d+)/, 'v_ref_base');
+            setupBaseValue(txt, /限定活動數：\s*(\d+)\+(\d+)/, 'v_act_base');
+            setupBaseValue(txt, /續不綁約\/轉續年約：\s*(\d+)\+(\d+)/, 'v_not_base');
+
+            // 4. 解析上班人數
+            const workPeopleMatch = txt.match(/上班人數：(\d+)/);
+            if(workPeopleMatch) document.getElementById('v_work_people').value = workPeopleMatch[1];
+
+            // 5. 渲染個人業績輸入框 (數值強制設為 0 歸零)
+            const personalContainer = document.getElementById('personalContainer');
+            personalContainer.innerHTML = '';
             
-            // 1. 本廠個積文字生成與統計
-            let localText = "";
-            const localGroups = document.querySelectorAll("#localPerformanceSection .performance-grid");
-            localGroups.forEach(group => {
-                let name = group.getAttribute("data-name");
-                let dan = parseFloat(group.querySelector(".p-dan").value) || 0;
-                let xu = parseFloat(group.querySelector(".p-xu").value) || 0;
-                let a = parseFloat(group.querySelector(".p-a").value) || 0;
-                let chong = parseFloat(group.querySelector(".p-chong").value) || 0;
-                
-                totalDan += dan; totalXu += xu; totalA += a; totalChong += chong;
-                localText += `${name}：${dan}/${xu}/${a}/${chong}\n`;
+            staffList.forEach(name => {
+                const row = document.createElement('div');
+                row.className = 'grid-5';
+                row.innerHTML = `
+                    <div class="staff-name">${name}</div>
+                    <input type="number" step="0.5" class="p-single" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-renew" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-project" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-rejoin" value="0" oninput="calculateTotal()" onclick="this.select();">
+                `;
+                personalContainer.appendChild(row);
             });
 
-            // 2. 外廠個積文字生成與統計
-            let extText = "";
-            const extCards = document.querySelectorAll("#extPerformanceContainer .ext-card");
-            extCards.forEach(card => {
-                let name = card.querySelector(".ext-name").value.trim() || "未命名";
-                let factory = card.querySelector(".ext-factory").value.trim() || "外廠";
-                let dan = parseFloat(card.querySelector(".p-dan").value) || 0;
-                let xu = parseFloat(card.querySelector(".p-xu").value) || 0;
-                let a = parseFloat(card.querySelector(".p-a").value) || 0;
-                let chong = parseFloat(card.querySelector(".p-chong").value) || 0;
-                
-                totalDan += dan; totalXu += xu; totalA += a; totalChong += chong;
-                extText += `${name}(${factory})：${dan}/${xu}/${a}/${chong}\n`;
+            // 歸零今日新增填寫格
+            document.querySelectorAll('input[id$="_add"]').forEach(el => el.value = "0");
+
+            calculateTotal();
+
+            document.getElementById('formContainer').style.display = 'block';
+            document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function setupBaseValue(text, regex, elementId) {
+            const match = text.match(regex);
+            document.getElementById(elementId).value = match ? (parseInt(match[1]) + parseInt(match[2])) : 0;
+        }
+
+        function calculateTotal() {
+            let fields = ['single', 'renew', 'project', 'rejoin'];
+            let classes = ['.p-single', '.p-renew', '.p-project', '.p-rejoin'];
+            fields.forEach((f, index) => {
+                let sum = 0;
+                document.querySelectorAll(classes[index]).forEach(input => {
+                    sum += parseFloat(input.value) || 0;
+                });
+                document.getElementById(`tot_${f}`).innerText = sum;
             });
+        }
 
-            // 統整輸出文字佈局（符合您回報格式）
-            let textText = `中南區民雄廠${displayDate}回報\n` +
-                `        單/續約/A專案/重入\n` +
-                `總計：${totalDan}/${totalXu}/${totalA}/${totalChong}\n` +
-                `個積\n` +
-                localText;
-                
-            if(extText) {
-                textText += `\n` + extText;
-            }
-                
-            textText += `===============\n` +
-                `換約：0\n` +
-                `=================\n` +
-                `退單：0\n` +
-                `=================\n` +
-                `備註:\n` +
-                `上班人數：2\n` +
-                `AP ：49+3\n` +
-                `BR ：15+0\n` +
-                `WI ：44+1\n` +
-                `VIP：25+1\n` +
-                `=================\n` +
-                `重新入會：18+3\n` +
-                `續約：85+1\n` +
-                `推薦名單數：71+0\n` +
-                `續不綁約/轉續年約：2+0\n\n` +
-                `-------------------------\n` +
-                `【訪客詳細未成交回報資料】\n` +
-                `1.日期/顧問：${dateVal} / ${consultantVal}\n` +
-                `2.姓名：${q2.value}\n` +
-                `3.來源（Ap/Br/Wi/Ti/網路名單/推體）：${document.getElementById("q3").value}\n` +
-                `4.推薦名單是否：${document.getElementById("q4").value}\n` +
-                `5.住家在哪/車程：${document.getElementById("q5").value}\n` +
-                `6.公司在哪/職業 ：${document.getElementById("q6").value}\n` +
-                `7.運動時段：${document.getElementById("q7").value}\n` +
-                `8.有無健身房經驗：${document.getElementById("q8").value}\n` +
-                `9.從哪出發來健身路程/車程：${document.getElementById("q9").value}\n` +
-                `10.今天來看健身房需求/動機：${q10.value}\n` +
-                `11.未成交原因/訪客問題：${q11.value}\n` +
-                `12.體驗天數：${document.getElementById("q12").value}\n` +
-                `13.未開體驗原因：${q13FinalValue}\n` +
-                `14.何時確認入會意願：${document.getElementById("q14").value}`;
+        function generateAndCopy() {
+            const titleDate = document.getElementById('reportDate').value;
+            const t_single = document.getElementById('tot_single').innerText;
+            const t_renew = document.getElementById('tot_renew').innerText;
+            const t_project = document.getElementById('tot_project').innerText;
+            const t_rejoin = document.getElementById('tot_rejoin').innerText;
 
-            navigator.clipboard.writeText(textText).then(function() {
-                alert("已自動合併計算本廠+外廠業績，並複製到剪貼簿！祝您大爆單！");
-            }).catch(function() {
-                alert("複製失敗，請手動全選複製。");
+            let personalText = '';
+            staffList.forEach((name, index) => {
+                const s = document.querySelectorAll('.p-single')[index].value || 0;
+                const r = document.querySelectorAll('.p-renew')[index].value || 0;
+                const p = document.querySelectorAll('.p-project')[index].value || 0;
+                const j = document.querySelectorAll('.p-rejoin')[index].value || 0;
+                personalText += `${name}：${s}/${r}/${p}/${j}\n`;
+            });
+            personalText = personalText.trim();
+
+            const workPeople = document.getElementById('v_work_people').value;
+            
+            const getVal = (id) => {
+                const b = document.getElementById(`v_${id}_base`).value || 0;
+                const a = document.getElementById(`v_${id}_add`).value || 0;
+                return `${b}+${a}`;
+            };
+
+            const resultFormat = 
+`${titleDate}
+        單/續約/A專案/重入
+總計：${t_single}/${t_renew}/${t_project}/${t_rejoin}
+個積
+${personalText}
+
+===============
+換約：${fixedChange}
+=================
+退單：${fixedRefund}
+=================
+備註:
+上班人數：${workPeople}
+AP ：${getVal('ap')}
+BR ：${getVal('br')}
+WI ：${getVal('wi')}
+VIP：${getVal('vip')}
+=================
+重新入會：${getVal('re')}
+續約：${getVal('un')}
+推薦名單數：${getVal('ref')}
+限定活動數：${getVal('act')}
+續不綁約/轉續年約：${getVal('not')}`;
+
+            navigator.clipboard.writeText(resultFormat).then(() => {
+                alert('🎉 今日業績回報已成功複製！');
+            }).catch(err => {
+                alert('複製失敗，請手動複製。');
             });
         }
     </script>
