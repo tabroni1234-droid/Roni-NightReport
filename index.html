@@ -8,16 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=400;700&family=Noto+Serif+TC:wght=300;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* 👑 同步預約網站全站強制字體設定 */
+        /* 全站黑金風格與強制宋體設定 */
         * {
             box-sizing: border-box;
-            font-family: 'Noto Serif TC', serif !important;
-        }
-
-        /* 👑 強制將網頁上的輸入框、按鈕、下拉選單與提示字(Placeholder)全部同步為同款宋體 */
-        input, select, textarea, button, option,
-        input::placeholder, textarea::placeholder {
-            font-family: 'Noto Serif TC', serif !important;
         }
         
         body {
@@ -26,11 +19,12 @@
             padding: 20px 15px;
             max-width: 650px;
             margin: 0 auto;
+            font-family: 'Noto Serif TC', serif; /* 預設採用思源宋體 */
             -webkit-font-smoothing: antialiased;
         }
         
+        /* 👑 修正：大標題維持完美的英文 Cinzel，僅在無英文時退入宋體 */
         h2 {
-            /* 👑 標題同步為預約網站的 Cinzel 與 Noto Serif TC 組合 */
             font-family: 'Cinzel', 'Noto Serif TC', serif !important;
             color: #c5a880; /* 香檳金 */
             text-align: center;
@@ -48,6 +42,7 @@
             margin-bottom: 30px;
             border-bottom: 1px solid #222224;
             padding-bottom: 15px;
+            font-family: 'Noto Serif TC', serif;
         }
         
         h3 {
@@ -55,6 +50,7 @@
             margin-top: 0;
             font-size: 1.1rem;
             letter-spacing: 1px;
+            font-family: 'Noto Serif TC', serif;
         }
 
         /* 金色 L 型對角線框 */
@@ -87,6 +83,13 @@
             color: #c5a880; /* 金色標籤 */
             font-size: 0.9rem;
             letter-spacing: 1px;
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* 👑 修正：確保輸入框、按鈕、提示文字（placeholder）100% 抓取到與預約網站相同的思源宋體 */
+        textarea, input, select, button,
+        textarea::placeholder, input::placeholder {
+            font-family: 'Noto Serif TC', serif !important;
         }
 
         /* 輸入框與文字框 */
@@ -147,6 +150,7 @@
             color: #8a8a8f;
             padding-bottom: 5px;
             border-bottom: 1px solid #2c2c2e;
+            font-family: 'Noto Serif TC', serif;
         }
         .grid-header:first-child { text-align: left; }
         
@@ -155,6 +159,7 @@
             color: #ffffff;
             font-size: 14px;
             letter-spacing: 1px;
+            font-family: 'Noto Serif TC', serif;
         }
 
         /* 外廠動態新增區區塊樣式 */
@@ -192,6 +197,7 @@
             text-align: center;
             cursor: pointer;
             padding: 0;
+            font-family: Arial, sans-serif !important; /* 保持刪除按鈕 X 的俐落度 */
         }
         .btn-add-ext {
             background-color: transparent;
@@ -216,6 +222,7 @@
             color: #c5a880;
             margin-top: 20px;
             background-color: rgba(197, 168, 128, 0.03);
+            font-family: 'Noto Serif TC', serif;
         }
 
         /* 備註累積數字提示小字 */
@@ -224,6 +231,7 @@
             font-size: 0.8rem;
             font-weight: normal;
             margin-left: 4px;
+            font-family: 'Noto Serif TC', serif;
         }
 
         /* 按鈕：經典黑金方塊 */
@@ -249,6 +257,7 @@
             font-size: 0.8em;
             color: #666666;
             margin-top: 6px;
+            font-family: 'Noto Serif TC', serif;
         }
         
         hr {
