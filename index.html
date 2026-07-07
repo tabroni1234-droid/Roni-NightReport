@@ -216,7 +216,6 @@
 
         /* 總計區塊 */
         .total-row {
-            border: 1px solid var(--primary-gold);
             border: 1px solid rgba(200, 170, 110, 0.5) !important;
             padding: 15px 12px;
             font-weight: bold;
@@ -342,7 +341,6 @@
             <div>重新入會 <span id="lbl_re_base" class="base-hint"></span>：</div><td><input type="number" id="v_re_add" value="0" onclick="this.select();"><input type="hidden" id="v_re_base"></td>
             <div>續約 <span id="lbl_un_base" class="base-hint"></span>：</div><td><input type="number" id="v_un_add" value="0" onclick="this.select();"><input type="hidden" id="v_un_base"></td>
             <div>推薦名單數 <span id="lbl_ref_base" class="base-hint"></span>：</div><td><input type="number" id="v_ref_add" value="0" onclick="this.select();"><input type="hidden" id="v_ref_base"></td>
-            <div>限定活動數 <span id="lbl_act_base" class="base-hint"></span>：</div><td><input type="number" id="v_act_add" value="0" onclick="this.select();"><input type="hidden" id="v_act_base"></td>
             <div>續不綁/轉續年 <span id="lbl_not_base" class="base-hint"></span>：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
         </div>
 
@@ -388,7 +386,6 @@
             setupBaseValue(txt, /重新入會：\s*(\d+)\+(\d+)/, 'v_re_base', 'lbl_re_base');
             setupBaseValue(txt, /續約：\s*(\d+)\+(\d+)/, 'v_un_base', 'lbl_un_base');
             setupBaseValue(txt, /推薦名單數：\s*(\d+)\+(\d+)/, 'v_ref_base', 'lbl_ref_base');
-            setupBaseValue(txt, /限定活動數：\s*(\d+)\+(\d+)/, 'v_act_base', 'lbl_act_base');
             setupBaseValue(txt, /續不綁約\/轉續年約：\s*(\d+)\+(\d+)/, 'v_not_base', 'lbl_not_base');
 
             // 4. 解析上班人數
@@ -563,7 +560,6 @@ VIP：${getVal('vip')}
 重新入會：${getVal('re')}
 續約：${getVal('un')}
 推薦名單數：${getVal('ref')}
-限定活動數：${getVal('act')}
 續不綁約/轉續年約：${getVal('not')}`;
 
             navigator.clipboard.writeText(resultFormat).then(() => {
