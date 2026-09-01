@@ -14,7 +14,7 @@
         }
         
         body {
-            background-color: #080808; /* 同步預約網站極緻黑 */
+            background-color: #080808;
             color: #E0E0E0;
             padding: 20px 15px;
             max-width: 650px;
@@ -24,10 +24,9 @@
             background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
         }
         
-        /* 👑 大標題同步為預約網站 Cinzel 頂級雕刻感英文字體 */
         h2 {
             font-family: 'Cinzel', serif !important;
-            color: #C8AA6E; /* 同步預約網站黃金原色 */
+            color: #C8AA6E;
             text-align: center;
             letter-spacing: 2px;
             margin-bottom: 5px;
@@ -56,7 +55,6 @@
             font-family: 'Noto Serif TC', serif;
         }
 
-        /* 古典金屬邊框卡片 */
         .section {
             background: #101010; 
             padding: 40px 30px;
@@ -65,12 +63,10 @@
             border: 1px solid rgba(200, 170, 110, 0.2);
             background-image: url("https://www.transparenttextures.com/patterns/black-linen.png");
         }
-        /* 左上角金邊 */
         .section::before {
             content: ''; position: absolute; top: 10px; left: 10px; width: 15px; height: 15px;
             border-top: 1px solid #C8AA6E; border-left: 1px solid #C8AA6E;
         }
-        /* 右下角金邊 */
         .section::after {
             content: ''; position: absolute; bottom: 10px; right: 10px; width: 15px; height: 15px;
             border-bottom: 1px solid #C8AA6E; border-right: 1px solid #C8AA6E;
@@ -89,23 +85,21 @@
             font-family: 'Noto Serif TC', serif;
         }
 
-        /* 👑 核心修正：將原本粗重的四方格子，改成跟預約網站一模一樣的「無背景、僅留底線」高雅樣式 */
         textarea, input[type="text"], input[type="number"], select {
             font-family: 'Noto Serif TC', serif !important;
             width: 100%;
-            background: transparent !important; /* 移除死板的黑色底塊 */
+            background: transparent !important;
             color: #ffffff;
             border: none !important;
-            border-bottom: 1px solid #444444 !important; /* 只保留優雅的下底線 */
+            border-bottom: 1px solid #444444 !important;
             border-radius: 0 !important;
             outline: none !important;
             font-size: 16px;
             transition: all 0.3s;
-            -webkit-appearance: none; /* 解除 iOS 預設黑框 */
+            -webkit-appearance: none;
             appearance: none;
         }
         
-        /* 由於 textarea 需要換行空間，特別補足其高度與邊距 */
         textarea {
             height: 100px;
             padding: 10px 0;
@@ -118,25 +112,21 @@
             line-height: 1.5;
         }
 
-        /* 點選輸入框時，底線流暢地變成奢華金線 */
         textarea:focus, input:focus, select:focus {
             border-bottom: 1px solid #C8AA6E !important;
         }
 
-        /* 提示字樣式同步 */
         textarea::placeholder, input::placeholder {
             font-family: 'Noto Serif TC', serif !important;
             color: #666666;
             font-size: 14px;
         }
 
-        /* 唯讀狀態（如被鎖定不能改的欄位） */
         input[readonly] {
             color: #666666 !important;
             border-bottom-color: #222222 !important;
         }
 
-        /* 業績網格排版調整 */
         .grid-5 {
             display: grid;
             grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
@@ -163,7 +153,6 @@
             font-family: 'Noto Serif TC', serif;
         }
 
-        /* 外廠動態新增區區塊樣式 */
         .ext-consultant-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px dashed rgba(200, 170, 110, 0.3);
@@ -214,7 +203,6 @@
             background-color: rgba(200, 170, 110, 0.08) !important;
         }
 
-        /* 總計區塊 */
         .total-row {
             border: 1px solid rgba(200, 170, 110, 0.5) !important;
             padding: 15px 12px;
@@ -225,7 +213,6 @@
             font-family: 'Noto Serif TC', serif;
         }
 
-        /* 備註累積數字提示小字 */
         .base-hint {
             color: #666666;
             font-size: 11px;
@@ -234,10 +221,9 @@
             font-family: 'Noto Serif TC', serif;
         }
 
-        /* 按鈕：經典黑金方塊（完全複製 NEXT STEP 的黃金比例與質感） */
         button {
-            background: #C8AA6E !important; /* 金底 */
-            color: #000000 !important; /* 黑字 */
+            background: #C8AA6E !important;
+            color: #000000 !important;
             border: 1px solid #C8AA6E !important;
             padding: 15px;
             font-size: 14px;
@@ -338,10 +324,10 @@
             <div style="font-size:12px; color:#666666;">項目 <span style="color:#888888;">(昨日累計)</span></div>
             <div style="font-size:12px; color:#C8AA6E; text-align:center;">今日新增</div>
             
-            <div>重新入會 <span id="lbl_re_base" class="base-hint"></span>：</div><td><input type="number" id="v_re_add" value="0" onclick="this.select();"><input type="hidden" id="v_re_base"></td>
-            <div>續約 <span id="lbl_un_base" class="base-hint"></span>：</div><td><input type="number" id="v_un_add" value="0" onclick="this.select();"><input type="hidden" id="v_un_base"></td>
             <div>推薦名單數 <span id="lbl_ref_base" class="base-hint"></span>：</div><td><input type="number" id="v_ref_add" value="0" onclick="this.select();"><input type="hidden" id="v_ref_base"></td>
-            <div>續不綁/轉續年 <span id="lbl_not_base" class="base-hint"></span>：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
+            <div>續不綁約 <span id="lbl_not_base" class="base-hint"></span>：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
+            <div>酷卡張數 <span id="lbl_cc_base" class="base-hint"></span>：</div><td><input type="number" id="v_cc_add" value="0" onclick="this.select();"><input type="hidden" id="v_cc_base"></td>
+            <div>酷卡兌換數 <span id="lbl_cce_base" class="base-hint"></span>：</div><td><input type="number" id="v_cce_add" value="0" onclick="this.select();"><input type="hidden" id="v_cce_base"></td>
         </div>
 
         <button onclick="generateAndCopy()" style="margin-top: 35px;">一鍵複製今日業績</button>
@@ -383,10 +369,10 @@
             setupBaseValue(txt, /BR\s*：\s*(\d+)\+(\d+)/, 'v_br_base', 'lbl_br_base');
             setupBaseValue(txt, /WI\s*：\s*(\d+)\+(\d+)/, 'v_wi_base', 'lbl_wi_base');
             setupBaseValue(txt, /VIP\s*：\s*(\d+)\+(\d+)/, 'v_vip_base', 'lbl_vip_base');
-            setupBaseValue(txt, /重新入會：\s*(\d+)\+(\d+)/, 'v_re_base', 'lbl_re_base');
-            setupBaseValue(txt, /續約：\s*(\d+)\+(\d+)/, 'v_un_base', 'lbl_un_base');
             setupBaseValue(txt, /推薦名單數：\s*(\d+)\+(\d+)/, 'v_ref_base', 'lbl_ref_base');
-            setupBaseValue(txt, /續不綁約\/轉續年約：\s*(\d+)\+(\d+)/, 'v_not_base', 'lbl_not_base');
+            setupBaseValue(txt, /續不綁約(?:\/轉續年約)?：\s*(\d+)\+(\d+)/, 'v_not_base', 'lbl_not_base');
+            setupBaseValue(txt, /酷卡張數：\s*(\d+)\+(\d+)/, 'v_cc_base', 'lbl_cc_base');
+            setupBaseValue(txt, /酷卡兌換數：\s*(\d+)\+(\d+)/, 'v_cce_base', 'lbl_cce_base');
 
             // 4. 解析上班人數
             const workPeopleMatch = txt.match(/上班人數：(\d+)/);
@@ -492,9 +478,6 @@
                 sums[f] = sum;
                 document.getElementById(`tot_${f}`).innerText = sum;
             });
-
-            document.getElementById('v_re_add').value = sums['rejoin'];
-            document.getElementById('v_un_add').value = sums['renew'];
         }
 
         function generateAndCopy() {
@@ -557,10 +540,10 @@ BR ：${getVal('br')}
 WI ：${getVal('wi')}
 VIP：${getVal('vip')}
 =================
-重新入會：${getVal('re')}
-續約：${getVal('un')}
 推薦名單數：${getVal('ref')}
-續不綁約/轉續年約：${getVal('not')}`;
+續不綁約：${getVal('not')}
+酷卡張數：${getVal('cc')}
+酷卡兌換數：${getVal('cce')}`;
 
             navigator.clipboard.writeText(resultFormat).then(() => {
                 alert('🎉 今日業績與累積數據已完美同步並複製！');
