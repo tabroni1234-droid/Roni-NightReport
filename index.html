@@ -17,7 +17,7 @@
             background-color: #080808;
             color: #E0E0E0;
             padding: 20px 15px;
-            max-width: 750px;
+            max-width: 650px;
             margin: 0 auto;
             font-family: 'Noto Serif TC', serif;
             -webkit-font-smoothing: antialiased;
@@ -57,7 +57,7 @@
 
         .section {
             background: #101010; 
-            padding: 40px 20px;
+            padding: 30px 15px;
             margin-bottom: 25px;
             position: relative;
             border: 1px solid rgba(200, 170, 110, 0.2);
@@ -130,26 +130,51 @@
             background: rgba(200, 170, 110, 0.05) !important;
         }
 
-        /* 👑 調整為 9 欄 (1 姓名 + 8 數據欄位) */
-        .grid-8 {
-            display: grid;
-            grid-template-columns: 1.3fr repeat(8, 1fr);
-            gap: 6px;
-            align-items: center;
-            margin-bottom: 12px;
+        /* 👑 橫向滾動容器外殼 */
+        .table-scroll-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid rgba(200, 170, 110, 0.15);
+            background: #0d0d0d;
+            margin-bottom: 15px;
         }
+
+        /* 👑 固定最小寬度，確保橫向滾動觸發 */
+        .grid-8-scroll {
+            min-width: 520px;
+            padding: 10px;
+        }
+
+        .grid-row {
+            display: grid;
+            grid-template-columns: 80px repeat(8, minmax(50px, 1fr));
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
         .grid-header {
             font-weight: bold;
             text-align: center;
-            font-size: 11px;
+            font-size: 12px;
             color: #888888;
-            padding-bottom: 5px;
+            padding-bottom: 6px;
             border-bottom: 1px solid #333333;
             font-family: 'Noto Serif TC', serif;
             white-space: nowrap;
         }
-        .grid-header:first-child { text-align: left; }
-        
+
+        /* 👑 姓名欄位 Sticky 左側凍結固定 */
+        .sticky-col {
+            position: sticky;
+            left: 0;
+            background-color: #101010;
+            z-index: 5;
+            padding-right: 5px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+        }
+
         .staff-name {
             font-weight: 500;
             color: #E0E0E0;
@@ -214,7 +239,7 @@
             padding: 12px 10px;
             font-weight: bold;
             color: #C8AA6E;
-            margin-top: 25px;
+            margin-top: 15px;
             background-color: rgba(200, 170, 110, 0.05);
             font-family: 'Noto Serif TC', serif;
         }
@@ -293,35 +318,43 @@
 
         <hr>
         
-        <label>個積填寫 (今日個積已強制歸零)：</label>
-        <div class="grid-8">
-            <div class="grid-header">名字</div>
-            <div class="grid-header">AP</div>
-            <div class="grid-header">BR</div>
-            <div class="grid-header">WI</div>
-            <div class="grid-header">新單</div>
-            <div class="grid-header">續約</div>
-            <div class="grid-header">重入</div>
-            <div class="grid-header">VIP</div>
-            <div class="grid-header">推體</div>
-        </div>
+        <label>個積填寫 (右滑可填寫後續項目)：</label>
         
-        <div id="personalContainer"></div>
+        <!-- 👑 橫向滾動容器 -->
+        <div class="table-scroll-wrapper">
+            <div class="grid-8-scroll">
+                <div class="grid-row">
+                    <div class="grid-header sticky-col">名字</div>
+                    <div class="grid-header">AP</div>
+                    <div class="grid-header">BR</div>
+                    <div class="grid-header">WI</div>
+                    <div class="grid-header">新單</div>
+                    <div class="grid-header">續約</div>
+                    <div class="grid-header">重入</div>
+                    <div class="grid-header">VIP</div>
+                    <div class="grid-header">推體</div>
+                </div>
+                
+                <div id="personalContainer"></div>
+            </div>
+        </div>
 
         <div id="extConsultantContainer"></div>
         <button type="button" class="btn-add-ext" onclick="addExtConsultantRow()">＋ 新增外廠顧問業績</button>
 
-        <div class="form-group total-row">
-            <div class="grid-8" style="margin-bottom: 0;">
-                <div style="color: #ffffff; font-size: 12px;">今日總計:</div>
-                <div id="tot_ap" style="text-align: center; font-size: 13px;">0</div>
-                <div id="tot_br" style="text-align: center; font-size: 13px;">0</div>
-                <div id="tot_wi" style="text-align: center; font-size: 13px;">0</div>
-                <div id="tot_single" style="text-align: center; font-size: 13px;">0</div>
-                <div id="tot_renew" style="text-align: center; font-size: 13px;">0</div>
-                <div id="tot_rejoin" style="text-align: center; font-size: 13px;">0</div>
-                <div id="tot_vip" style="text-align: center; font-size: 13px;">0</div>
-                <div id="tot_ref" style="text-align: center; font-size: 13px;">0</div>
+        <div class="form-group total-row table-scroll-wrapper" style="border:none !important; margin-bottom: 25px;">
+            <div class="grid-8-scroll" style="padding:0;">
+                <div class="grid-row" style="margin-bottom:0;">
+                    <div class="sticky-col" style="color: #ffffff; font-size: 12px; font-weight: bold;">今日總計</div>
+                    <div id="tot_ap" style="text-align: center; font-size: 13px;">0</div>
+                    <div id="tot_br" style="text-align: center; font-size: 13px;">0</div>
+                    <div id="tot_wi" style="text-align: center; font-size: 13px;">0</div>
+                    <div id="tot_single" style="text-align: center; font-size: 13px;">0</div>
+                    <div id="tot_renew" style="text-align: center; font-size: 13px;">0</div>
+                    <div id="tot_rejoin" style="text-align: center; font-size: 13px;">0</div>
+                    <div id="tot_vip" style="text-align: center; font-size: 13px;">0</div>
+                    <div id="tot_ref" style="text-align: center; font-size: 13px;">0</div>
+                </div>
             </div>
         </div>
 
@@ -409,9 +442,9 @@
             
             staffList.forEach(name => {
                 const row = document.createElement('div');
-                row.className = 'grid-8';
+                row.className = 'grid-row';
                 row.innerHTML = `
-                    <div class="staff-name">${name}</div>
+                    <div class="staff-name sticky-col">${name}</div>
                     <input type="number" class="p-ap" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-br" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-wi" value="0" oninput="calculateTotal()" onclick="this.select();">
@@ -474,16 +507,20 @@
                     <input type="text" class="ext-name" placeholder="外廠顧問名字" value="${name}" onclick="this.select();">
                     <input type="text" class="ext-factory" placeholder="所屬廠館" value="${factory}" onclick="this.select();">
                 </div>
-                <div class="grid-8" style="margin-bottom:0;">
-                    <div style="font-size:11px; color:#888888; font-weight:bold;">業績➔</div>
-                    <input type="number" class="p-ap ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-br ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-wi ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" step="0.5" class="p-single ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-renew ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-rejoin ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-vip ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-ref ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                <div class="table-scroll-wrapper" style="margin-bottom:0;">
+                    <div class="grid-8-scroll" style="padding:0;">
+                        <div class="grid-row" style="margin-bottom:0;">
+                            <div class="sticky-col" style="font-size:11px; color:#888888; font-weight:bold;">業績➔</div>
+                            <input type="number" class="p-ap ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" class="p-br ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" class="p-wi ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" step="0.5" class="p-single ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" class="p-renew ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" class="p-rejoin ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" class="p-vip ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" class="p-ref ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                        </div>
+                    </div>
                 </div>
             `;
             container.appendChild(card);
@@ -512,7 +549,7 @@
                 document.getElementById(`tot_${f}`).innerText = sum;
             });
 
-            // 👑 自動同步 AP, BR, WI, VIP 及 推體(推薦名單數) 到下方「今日新增」
+            // 自動同步 AP, BR, WI, VIP 及 推體(推薦名單數) 到下方「今日新增」
             document.getElementById('v_ap_add').value = sums.ap;
             document.getElementById('v_br_add').value = sums.br;
             document.getElementById('v_wi_add').value = sums.wi;
