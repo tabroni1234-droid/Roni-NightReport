@@ -397,6 +397,36 @@
         let fixedRefund = "0";
         let extRowCount = 0; 
 
+        // 👑 多欄位同步滾動控制邏輯
+        let isSyncingScroll = false;
+
+        function updateScrollSyncListeners() {
+            const wrappers = document.querySelectorAll('.table-scroll-wrapper');
+            wrappers.forEach(wrapper => {
+                wrapper.removeEventListener('scroll', handleSyncScroll);
+                wrapper.addEventListener('scroll', handleSyncScroll);
+            });
+        }
+
+        function handleSyncScroll(event) {
+            if (isSyncingScroll) return;
+            isSyncingScroll = true;
+
+            const source = event.target;
+            const scrollLeft = source.scrollLeft;
+            const wrappers = document.querySelectorAll('.table-scroll-wrapper');
+
+            wrappers.forEach(wrapper => {
+                if (wrapper !== source) {
+                    wrapper.scrollLeft = scrollLeft;
+                }
+            });
+
+            requestAnimationFrame(() => {
+                isSyncingScroll = false;
+            });
+        }
+
         function parseAndSetup() {
             const txt = document.getElementById('rawInput').value;
             if(!txt.trim()){
@@ -472,6 +502,10 @@
             calculateTotal();
 
             document.getElementById('formContainer').style.display = 'block';
+            
+            // 綁定/刷新同步滾動事件
+            updateScrollSyncListeners();
+
             document.getElementById('formContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -525,6 +559,9 @@
             `;
             container.appendChild(card);
             calculateTotal();
+
+            // 新增外廠列後重新綁定同步滾動
+            updateScrollSyncListeners();
         }
 
         function removeExtRow(id) {
@@ -532,6 +569,7 @@
             if(el) {
                 el.remove();
                 calculateTotal();
+                updateScrollSyncListeners();
             }
         }
 
