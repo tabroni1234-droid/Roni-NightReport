@@ -17,7 +17,7 @@
             background-color: #080808;
             color: #E0E0E0;
             padding: 20px 15px;
-            max-width: 650px;
+            max-width: 750px;
             margin: 0 auto;
             font-family: 'Noto Serif TC', serif;
             -webkit-font-smoothing: antialiased;
@@ -57,7 +57,7 @@
 
         .section {
             background: #101010; 
-            padding: 40px 30px;
+            padding: 40px 20px;
             margin-bottom: 25px;
             position: relative;
             border: 1px solid rgba(200, 170, 110, 0.2);
@@ -94,10 +94,11 @@
             border-bottom: 1px solid #444444 !important;
             border-radius: 0 !important;
             outline: none !important;
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.3s;
             -webkit-appearance: none;
             appearance: none;
+            text-align: center;
         }
         
         textarea {
@@ -105,10 +106,11 @@
             padding: 10px 0;
             resize: vertical;
             line-height: 1.6;
+            text-align: left;
         }
         
         input[type="text"], input[type="number"], select {
-            padding: 10px 0;
+            padding: 8px 0;
             line-height: 1.5;
         }
 
@@ -119,44 +121,48 @@
         textarea::placeholder, input::placeholder {
             font-family: 'Noto Serif TC', serif !important;
             color: #666666;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         input[readonly] {
-            color: #666666 !important;
-            border-bottom-color: #222222 !important;
+            color: #C8AA6E !important;
+            border-bottom-color: #333333 !important;
+            background: rgba(200, 170, 110, 0.05) !important;
         }
 
-        .grid-5 {
+        /* 👑 調整為 9 欄 (1 姓名 + 8 數據欄位) */
+        .grid-8 {
             display: grid;
-            grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: 1.3fr repeat(8, 1fr);
+            gap: 6px;
             align-items: center;
             margin-bottom: 12px;
         }
         .grid-header {
             font-weight: bold;
             text-align: center;
-            font-size: 13px;
+            font-size: 11px;
             color: #888888;
             padding-bottom: 5px;
             border-bottom: 1px solid #333333;
             font-family: 'Noto Serif TC', serif;
+            white-space: nowrap;
         }
         .grid-header:first-child { text-align: left; }
         
         .staff-name {
             font-weight: 500;
             color: #E0E0E0;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 1px;
             font-family: 'Noto Serif TC', serif;
+            white-space: nowrap;
         }
 
         .ext-consultant-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px dashed rgba(200, 170, 110, 0.3);
-            padding: 20px 15px;
+            padding: 15px 10px;
             margin-bottom: 15px;
             position: relative;
         }
@@ -164,11 +170,11 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .ext-meta-inputs input {
             text-align: left !important;
-            font-size: 14px;
+            font-size: 13px;
         }
         .btn-delete-ext {
             position: absolute;
@@ -205,7 +211,7 @@
 
         .total-row {
             border: 1px solid rgba(200, 170, 110, 0.5) !important;
-            padding: 15px 12px;
+            padding: 12px 10px;
             font-weight: bold;
             color: #C8AA6E;
             margin-top: 25px;
@@ -219,6 +225,17 @@
             font-weight: normal;
             margin-left: 4px;
             font-family: 'Noto Serif TC', serif;
+        }
+
+        .remark-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 10px;
+            max-width: 480px;
+            padding: 15px;
+            border: 1px solid #333333;
+            background-color: rgba(255,255,255,0.02);
+            align-items: center;
         }
 
         button {
@@ -277,12 +294,16 @@
         <hr>
         
         <label>個積填寫 (今日個積已強制歸零)：</label>
-        <div class="grid-5">
+        <div class="grid-8">
             <div class="grid-header">名字</div>
+            <div class="grid-header">AP</div>
+            <div class="grid-header">BR</div>
+            <div class="grid-header">WI</div>
             <div class="grid-header">新單</div>
             <div class="grid-header">續約</div>
-            <div class="grid-header">A專案</div>
             <div class="grid-header">重入</div>
+            <div class="grid-header">VIP</div>
+            <div class="grid-header">推體</div>
         </div>
         
         <div id="personalContainer"></div>
@@ -291,12 +312,16 @@
         <button type="button" class="btn-add-ext" onclick="addExtConsultantRow()">＋ 新增外廠顧問業績</button>
 
         <div class="form-group total-row">
-            <div class="grid-5" style="margin-bottom: 0;">
-                <div style="color: #ffffff;">今日總計:</div>
-                <div id="tot_single" style="text-align: center; font-size: 16px;">0</div>
-                <div id="tot_renew" style="text-align: center; font-size: 16px;">0</div>
-                <div id="tot_project" style="text-align: center; font-size: 16px;">0</div>
-                <div id="tot_rejoin" style="text-align: center; font-size: 16px;">0</div>
+            <div class="grid-8" style="margin-bottom: 0;">
+                <div style="color: #ffffff; font-size: 12px;">今日總計:</div>
+                <div id="tot_ap" style="text-align: center; font-size: 13px;">0</div>
+                <div id="tot_br" style="text-align: center; font-size: 13px;">0</div>
+                <div id="tot_wi" style="text-align: center; font-size: 13px;">0</div>
+                <div id="tot_single" style="text-align: center; font-size: 13px;">0</div>
+                <div id="tot_renew" style="text-align: center; font-size: 13px;">0</div>
+                <div id="tot_rejoin" style="text-align: center; font-size: 13px;">0</div>
+                <div id="tot_vip" style="text-align: center; font-size: 13px;">0</div>
+                <div id="tot_ref" style="text-align: center; font-size: 13px;">0</div>
             </div>
         </div>
 
@@ -307,27 +332,27 @@
             <input type="number" id="v_work_people" value="0" onclick="this.select();">
         </div>
         
-        <label>備註各項目累積進度 (填寫今日新增)：</label>
-        <div class="grid-5" style="grid-template-columns: 1.6fr 1fr; max-width: 480px; padding: 15px; border: 1px solid #333333; background-color: rgba(255,255,255,0.02);">
+        <label>備註各項目累積進度 (上方輸入後自動加總)：</label>
+        <div class="remark-grid">
             <div style="font-size:12px; color:#666666;">項目 <span style="color:#888888;">(昨日累計)</span></div>
             <div style="font-size:12px; color:#C8AA6E; text-align:center;">今日新增</div>
             
-            <div>AP <span id="lbl_ap_base" class="base-hint"></span>：</div><td><input type="number" id="v_ap_add" value="0" onclick="this.select();"><input type="hidden" id="v_ap_base"></td>
-            <div>BR <span id="lbl_br_base" class="base-hint"></span>：</div><td><input type="number" id="v_br_add" value="0" onclick="this.select();"><input type="hidden" id="v_br_base"></td>
-            <div>WI <span id="lbl_wi_base" class="base-hint"></span>：</div><td><input type="number" id="v_wi_add" value="0" onclick="this.select();"><input type="hidden" id="v_wi_base"></td>
-            <div>VIP <span id="lbl_vip_base" class="base-hint"></span>：</div><td><input type="number" id="v_vip_add" value="0" onclick="this.select();"><input type="hidden" id="v_vip_base"></td>
+            <div>AP <span id="lbl_ap_base" class="base-hint"></span>：</div><div><input type="number" id="v_ap_add" value="0" readonly><input type="hidden" id="v_ap_base"></div>
+            <div>BR <span id="lbl_br_base" class="base-hint"></span>：</div><div><input type="number" id="v_br_add" value="0" readonly><input type="hidden" id="v_br_base"></div>
+            <div>WI <span id="lbl_wi_base" class="base-hint"></span>：</div><div><input type="number" id="v_wi_add" value="0" readonly><input type="hidden" id="v_wi_base"></div>
+            <div>VIP <span id="lbl_vip_base" class="base-hint"></span>：</div><div><input type="number" id="v_vip_add" value="0" readonly><input type="hidden" id="v_vip_base"></div>
         </div>
 
         <br>
 
-        <div class="grid-5" style="grid-template-columns: 1.6fr 1fr; max-width: 480px; padding: 15px; border: 1px solid #333333; background-color: rgba(255,255,255,0.02);">
+        <div class="remark-grid">
             <div style="font-size:12px; color:#666666;">項目 <span style="color:#888888;">(昨日累計)</span></div>
             <div style="font-size:12px; color:#C8AA6E; text-align:center;">今日新增</div>
             
-            <div>推薦名單數 <span id="lbl_ref_base" class="base-hint"></span>：</div><td><input type="number" id="v_ref_add" value="0" onclick="this.select();"><input type="hidden" id="v_ref_base"></td>
-            <div>續不綁約 <span id="lbl_not_base" class="base-hint"></span>：</div><td><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></td>
-            <div>酷卡張數 <span id="lbl_cc_base" class="base-hint"></span>：</div><td><input type="number" id="v_cc_add" value="0" onclick="this.select();"><input type="hidden" id="v_cc_base"></td>
-            <div>酷卡兌換數 <span id="lbl_cce_base" class="base-hint"></span>：</div><td><input type="number" id="v_cce_add" value="0" onclick="this.select();"><input type="hidden" id="v_cce_base"></td>
+            <div>推薦名單數 <span id="lbl_ref_base" class="base-hint"></span>：</div><div><input type="number" id="v_ref_add" value="0" readonly><input type="hidden" id="v_ref_base"></div>
+            <div>續不綁約 <span id="lbl_not_base" class="base-hint"></span>：</div><div><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></div>
+            <div>酷卡張數 <span id="lbl_cc_base" class="base-hint"></span>：</div><div><input type="number" id="v_cc_add" value="0" onclick="this.select();"><input type="hidden" id="v_cc_base"></div>
+            <div>酷卡兌換數 <span id="lbl_cce_base" class="base-hint"></span>：</div><div><input type="number" id="v_cce_add" value="0" onclick="this.select();"><input type="hidden" id="v_cce_base"></div>
         </div>
 
         <button onclick="generateAndCopy()" style="margin-top: 35px;">一鍵複製今日業績</button>
@@ -384,19 +409,23 @@
             
             staffList.forEach(name => {
                 const row = document.createElement('div');
-                row.className = 'grid-5';
+                row.className = 'grid-8';
                 row.innerHTML = `
                     <div class="staff-name">${name}</div>
+                    <input type="number" class="p-ap" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-br" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-wi" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" step="0.5" class="p-single" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-renew" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-project" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-rejoin" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-vip" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-ref" value="0" oninput="calculateTotal()" onclick="this.select();">
                 `;
                 personalContainer.appendChild(row);
             });
 
             // 6. 自動捕捉昨日訊息裡的外廠顧問
-            const extRegex = /^([^\s：\(\)\xFF08\xFF09]+)[\(\xFF08]([^\)\xFF09]+)[\)\xFF09]\s*：\s*([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)/gm;
+            const extRegex = /^([^\s：\(\)\xFF08\xFF09]+)[\(\xFF08]([^\)\xFF09]+)[\)\xFF09]\s*：\s*([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)/gm;
             let match;
             while ((match = extRegex.exec(txt)) !== null) {
                 let extName = match[1].trim();
@@ -445,12 +474,16 @@
                     <input type="text" class="ext-name" placeholder="外廠顧問名字" value="${name}" onclick="this.select();">
                     <input type="text" class="ext-factory" placeholder="所屬廠館" value="${factory}" onclick="this.select();">
                 </div>
-                <div class="grid-5" style="margin-bottom:0;">
-                    <div style="font-size:12px; color:#888888; font-weight:bold;">輸入今日業績➔</div>
+                <div class="grid-8" style="margin-bottom:0;">
+                    <div style="font-size:11px; color:#888888; font-weight:bold;">業績➔</div>
+                    <input type="number" class="p-ap ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-br ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-wi ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" step="0.5" class="p-single ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-renew ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-project ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-rejoin ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-vip ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" class="p-ref ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
                 </div>
             `;
             container.appendChild(card);
@@ -466,9 +499,9 @@
         }
 
         function calculateTotal() {
-            let fields = ['single', 'renew', 'project', 'rejoin'];
-            let classes = ['.p-single', '.p-renew', '.p-project', '.p-rejoin'];
-            let sums = { single: 0, renew: 0, project: 0, rejoin: 0 };
+            let fields = ['ap', 'br', 'wi', 'single', 'renew', 'rejoin', 'vip', 'ref'];
+            let classes = ['.p-ap', '.p-br', '.p-wi', '.p-single', '.p-renew', '.p-rejoin', '.p-vip', '.p-ref'];
+            let sums = {};
 
             fields.forEach((f, index) => {
                 let sum = 0;
@@ -478,22 +511,37 @@
                 sums[f] = sum;
                 document.getElementById(`tot_${f}`).innerText = sum;
             });
+
+            // 👑 自動同步 AP, BR, WI, VIP 及 推體(推薦名單數) 到下方「今日新增」
+            document.getElementById('v_ap_add').value = sums.ap;
+            document.getElementById('v_br_add').value = sums.br;
+            document.getElementById('v_wi_add').value = sums.wi;
+            document.getElementById('v_vip_add').value = sums.vip;
+            document.getElementById('v_ref_add').value = sums.ref;
         }
 
         function generateAndCopy() {
             const titleDate = document.getElementById('reportDate').value;
+            const t_ap = document.getElementById('tot_ap').innerText;
+            const t_br = document.getElementById('tot_br').innerText;
+            const t_wi = document.getElementById('tot_wi').innerText;
             const t_single = document.getElementById('tot_single').innerText;
             const t_renew = document.getElementById('tot_renew').innerText;
-            const t_project = document.getElementById('tot_project').innerText;
             const t_rejoin = document.getElementById('tot_rejoin').innerText;
+            const t_vip = document.getElementById('tot_vip').innerText;
+            const t_ref = document.getElementById('tot_ref').innerText;
 
             let personalText = '';
             staffList.forEach((name, index) => {
+                const ap = document.querySelectorAll('#personalContainer .p-ap')[index].value || 0;
+                const br = document.querySelectorAll('#personalContainer .p-br')[index].value || 0;
+                const wi = document.querySelectorAll('#personalContainer .p-wi')[index].value || 0;
                 const s = document.querySelectorAll('#personalContainer .p-single')[index].value || 0;
                 const r = document.querySelectorAll('#personalContainer .p-renew')[index].value || 0;
-                const p = document.querySelectorAll('#personalContainer .p-project')[index].value || 0;
                 const j = document.querySelectorAll('#personalContainer .p-rejoin')[index].value || 0;
-                personalText += `${name}：${s}/${r}/${p}/${j}\n`;
+                const vip = document.querySelectorAll('#personalContainer .p-vip')[index].value || 0;
+                const ref = document.querySelectorAll('#personalContainer .p-ref')[index].value || 0;
+                personalText += `${name}：${ap}/${br}/${wi}/${s}/${r}/${j}/${vip}/${ref}\n`;
             });
 
             let extText = '';
@@ -503,11 +551,15 @@
                 const factory = card.querySelector('.ext-factory').value.trim();
                 if(!name && !factory) return;
                 
+                const ap = card.querySelector('.p-ap').value || 0;
+                const br = card.querySelector('.p-br').value || 0;
+                const wi = card.querySelector('.p-wi').value || 0;
                 const s = card.querySelector('.p-single').value || 0;
                 const r = card.querySelector('.p-renew').value || 0;
-                const p = card.querySelector('.p-project').value || 0;
                 const j = card.querySelector('.p-rejoin').value || 0;
-                extText += `${name}(${factory}）：${s}/${r}/${p}/${j}\n`;
+                const vip = card.querySelector('.p-vip').value || 0;
+                const ref = card.querySelector('.p-ref').value || 0;
+                extText += `${name}(${factory}）：${ap}/${br}/${wi}/${s}/${r}/${j}/${vip}/${ref}\n`;
             });
 
             let finalIndividualText = personalText;
@@ -523,8 +575,8 @@
 
             const resultFormat = 
 `${titleDate}
-        單/續約/A專案/重入
-總計：${t_single}/${t_renew}/${t_project}/${t_rejoin}
+        AP/BR/WI/單/續/重/VIP/推
+總計：${t_ap}/${t_br}/${t_wi}/${t_single}/${t_renew}/${t_rejoin}/${t_vip}/${t_ref}
 個積
 ${finalIndividualText}
 
