@@ -328,10 +328,10 @@
                     <div class="grid-header">AP</div>
                     <div class="grid-header">BR</div>
                     <div class="grid-header">WI</div>
-                    <div class="grid-header">新單</div>
+                    <div class="grid-header">單</div>
                     <div class="grid-header">續約</div>
+                    <div class="grid-header">A專案</div>
                     <div class="grid-header">重入</div>
-                    <div class="grid-header">VIP</div>
                     <div class="grid-header">推體</div>
                 </div>
                 
@@ -351,8 +351,8 @@
                     <div id="tot_wi" style="text-align: center; font-size: 13px;">0</div>
                     <div id="tot_single" style="text-align: center; font-size: 13px;">0</div>
                     <div id="tot_renew" style="text-align: center; font-size: 13px;">0</div>
+                    <div id="tot_a_project" style="text-align: center; font-size: 13px;">0</div>
                     <div id="tot_rejoin" style="text-align: center; font-size: 13px;">0</div>
-                    <div id="tot_vip" style="text-align: center; font-size: 13px;">0</div>
                     <div id="tot_ref" style="text-align: center; font-size: 13px;">0</div>
                 </div>
             </div>
@@ -373,7 +373,7 @@
             <div>AP <span id="lbl_ap_base" class="base-hint"></span>：</div><div><input type="number" id="v_ap_add" value="0" readonly><input type="hidden" id="v_ap_base"></div>
             <div>BR <span id="lbl_br_base" class="base-hint"></span>：</div><div><input type="number" id="v_br_add" value="0" readonly><input type="hidden" id="v_br_base"></div>
             <div>WI <span id="lbl_wi_base" class="base-hint"></span>：</div><div><input type="number" id="v_wi_add" value="0" readonly><input type="hidden" id="v_wi_base"></div>
-            <div>VIP <span id="lbl_vip_base" class="base-hint"></span>：</div><div><input type="number" id="v_vip_add" value="0" readonly><input type="hidden" id="v_vip_base"></div>
+            <div>VIP <span id="lbl_vip_base" class="base-hint"></span>：</div><div><input type="number" id="v_vip_add" value="0" onclick="this.select();"><input type="hidden" id="v_vip_base"></div>
         </div>
 
         <br>
@@ -382,10 +382,10 @@
             <div style="font-size:12px; color:#666666;">項目 <span style="color:#888888;">(昨日累計)</span></div>
             <div style="font-size:12px; color:#C8AA6E; text-align:center;">今日新增</div>
             
+            <div>重新入會 <span id="lbl_rejoin_base" class="base-hint"></span>：</div><div><input type="number" id="v_rejoin_add" value="0" readonly><input type="hidden" id="v_rejoin_base"></div>
+            <div>續約 <span id="lbl_renew_base" class="base-hint"></span>：</div><div><input type="number" id="v_renew_add" value="0" readonly><input type="hidden" id="v_renew_base"></div>
             <div>推薦名單數 <span id="lbl_ref_base" class="base-hint"></span>：</div><div><input type="number" id="v_ref_add" value="0" readonly><input type="hidden" id="v_ref_base"></div>
-            <div>續不綁約 <span id="lbl_not_base" class="base-hint"></span>：</div><div><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></div>
-            <div>酷卡張數 <span id="lbl_cc_base" class="base-hint"></span>：</div><div><input type="number" id="v_cc_add" value="0" onclick="this.select();"><input type="hidden" id="v_cc_base"></div>
-            <div>酷卡兌換數 <span id="lbl_cce_base" class="base-hint"></span>：</div><div><input type="number" id="v_cce_add" value="0" onclick="this.select();"><input type="hidden" id="v_cce_base"></div>
+            <div>續不綁約/轉續年約 <span id="lbl_not_base" class="base-hint"></span>：</div><div><input type="number" id="v_not_add" value="0" onclick="this.select();"><input type="hidden" id="v_not_base"></div>
         </div>
 
         <button onclick="generateAndCopy()" style="margin-top: 35px;">一鍵複製今日業績</button>
@@ -445,7 +445,7 @@
                 dateObj.setDate(dateObj.getDate() + 1);
                 document.getElementById('reportDate').value = `中南區民雄廠${dateObj.getMonth() + 1}/${dateObj.getDate()}回報`;
             } else {
-                document.getElementById('reportDate').value = "中南區民雄廠6/14回報";
+                document.getElementById('reportDate').value = "中南區民雄廠7/2回報";
             }
 
             // 2. 解析固定欄位
@@ -457,10 +457,10 @@
             setupBaseValue(txt, /BR\s*：\s*(\d+)\+(\d+)/, 'v_br_base', 'lbl_br_base');
             setupBaseValue(txt, /WI\s*：\s*(\d+)\+(\d+)/, 'v_wi_base', 'lbl_wi_base');
             setupBaseValue(txt, /VIP\s*：\s*(\d+)\+(\d+)/, 'v_vip_base', 'lbl_vip_base');
-            setupBaseValue(txt, /推薦名單數：\s*(\d+)\+(\d+)/, 'v_ref_base', 'lbl_ref_base');
-            setupBaseValue(txt, /續不綁約(?:\/轉續年約)?：\s*(\d+)\+(\d+)/, 'v_not_base', 'lbl_not_base');
-            setupBaseValue(txt, /酷卡張數：\s*(\d+)\+(\d+)/, 'v_cc_base', 'lbl_cc_base');
-            setupBaseValue(txt, /酷卡兌換數：\s*(\d+)\+(\d+)/, 'v_cce_base', 'lbl_cce_base');
+            setupBaseValue(txt, /重新入會\s*：\s*(\d+)\+(\d+)/, 'v_rejoin_base', 'lbl_rejoin_base');
+            setupBaseValue(txt, /續約\s*：\s*(\d+)\+(\d+)/, 'v_renew_base', 'lbl_renew_base');
+            setupBaseValue(txt, /推薦名單數\s*：\s*(\d+)\+(\d+)/, 'v_ref_base', 'lbl_ref_base');
+            setupBaseValue(txt, /續不綁約(?:\/轉續年約)?\s*：\s*(\d+)\+(\d+)/, 'v_not_base', 'lbl_not_base');
 
             // 4. 解析上班人數
             const workPeopleMatch = txt.match(/上班人數：(\d+)/);
@@ -479,16 +479,16 @@
                     <input type="number" class="p-br" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-wi" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" step="0.5" class="p-single" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-renew" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-rejoin" value="0" oninput="calculateTotal()" onclick="this.select();">
-                    <input type="number" class="p-vip" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" step="0.5" class="p-renew" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" step="0.5" class="p-a-project" value="0" oninput="calculateTotal()" onclick="this.select();">
+                    <input type="number" step="0.5" class="p-rejoin" value="0" oninput="calculateTotal()" onclick="this.select();">
                     <input type="number" class="p-ref" value="0" oninput="calculateTotal()" onclick="this.select();">
                 `;
                 personalContainer.appendChild(row);
             });
 
             // 6. 自動捕捉昨日訊息裡的外廠顧問
-            const extRegex = /^([^\s：\(\)\xFF08\xFF09]+)[\(\xFF08]([^\)\xFF09]+)[\)\xFF09]\s*：\s*([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)/gm;
+            const extRegex = /^([^\s：\(\)\xFF08\xFF09]+)[\(\xFF08]([^\)\xFF09]+)[\)\xFF09]\s*：\s*([\d\.]+)\/([\d\.]+)\/([\d\.]+)\/([\d\.]+)/gm;
             let match;
             while ((match = extRegex.exec(txt)) !== null) {
                 let extName = match[1].trim();
@@ -512,8 +512,8 @@
         function setupBaseValue(text, regex, elementId, labelId) {
             const match = text.match(regex);
             if (match) {
-                let part1 = parseInt(match[1]) || 0;
-                let part2 = parseInt(match[2]) || 0;
+                let part1 = parseFloat(match[1]) || 0;
+                let part2 = parseFloat(match[2]) || 0;
                 let totalYesterday = part1 + part2;
                 
                 document.getElementById(elementId).value = totalYesterday;
@@ -549,9 +549,9 @@
                             <input type="number" class="p-br ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
                             <input type="number" class="p-wi ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
                             <input type="number" step="0.5" class="p-single ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                            <input type="number" class="p-renew ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                            <input type="number" class="p-rejoin ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
-                            <input type="number" class="p-vip ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" step="0.5" class="p-renew ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" step="0.5" class="p-a-project ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
+                            <input type="number" step="0.5" class="p-rejoin ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
                             <input type="number" class="p-ref ext-p" value="0" oninput="calculateTotal()" onclick="this.select();">
                         </div>
                     </div>
@@ -574,8 +574,8 @@
         }
 
         function calculateTotal() {
-            let fields = ['ap', 'br', 'wi', 'single', 'renew', 'rejoin', 'vip', 'ref'];
-            let classes = ['.p-ap', '.p-br', '.p-wi', '.p-single', '.p-renew', '.p-rejoin', '.p-vip', '.p-ref'];
+            let fields = ['ap', 'br', 'wi', 'single', 'renew', 'a_project', 'rejoin', 'ref'];
+            let classes = ['.p-ap', '.p-br', '.p-wi', '.p-single', '.p-renew', '.p-a-project', '.p-rejoin', '.p-ref'];
             let sums = {};
 
             fields.forEach((f, index) => {
@@ -587,36 +587,29 @@
                 document.getElementById(`tot_${f}`).innerText = sum;
             });
 
-            // 自動同步 AP, BR, WI, VIP 及 推體(推薦名單數) 到下方「今日新增」
+            // 自動同步 AP, BR, WI, 重入, 續約 及 推體(推薦名單數) 到下方「今日新增」
             document.getElementById('v_ap_add').value = sums.ap;
             document.getElementById('v_br_add').value = sums.br;
             document.getElementById('v_wi_add').value = sums.wi;
-            document.getElementById('v_vip_add').value = sums.vip;
+            document.getElementById('v_rejoin_add').value = sums.rejoin;
+            document.getElementById('v_renew_add').value = sums.renew;
             document.getElementById('v_ref_add').value = sums.ref;
         }
 
         function generateAndCopy() {
             const titleDate = document.getElementById('reportDate').value;
-            const t_ap = document.getElementById('tot_ap').innerText;
-            const t_br = document.getElementById('tot_br').innerText;
-            const t_wi = document.getElementById('tot_wi').innerText;
             const t_single = document.getElementById('tot_single').innerText;
             const t_renew = document.getElementById('tot_renew').innerText;
+            const t_a_project = document.getElementById('tot_a_project').innerText;
             const t_rejoin = document.getElementById('tot_rejoin').innerText;
-            const t_vip = document.getElementById('tot_vip').innerText;
-            const t_ref = document.getElementById('tot_ref').innerText;
 
             let personalText = '';
             staffList.forEach((name, index) => {
-                const ap = document.querySelectorAll('#personalContainer .p-ap')[index].value || 0;
-                const br = document.querySelectorAll('#personalContainer .p-br')[index].value || 0;
-                const wi = document.querySelectorAll('#personalContainer .p-wi')[index].value || 0;
                 const s = document.querySelectorAll('#personalContainer .p-single')[index].value || 0;
                 const r = document.querySelectorAll('#personalContainer .p-renew')[index].value || 0;
+                const a = document.querySelectorAll('#personalContainer .p-a-project')[index].value || 0;
                 const j = document.querySelectorAll('#personalContainer .p-rejoin')[index].value || 0;
-                const vip = document.querySelectorAll('#personalContainer .p-vip')[index].value || 0;
-                const ref = document.querySelectorAll('#personalContainer .p-ref')[index].value || 0;
-                personalText += `${name}：${ap}/${br}/${wi}/${s}/${r}/${j}/${vip}/${ref}\n`;
+                personalText += `${name}：${s}/${r}/${a}/${j}\n`;
             });
 
             let extText = '';
@@ -626,15 +619,11 @@
                 const factory = card.querySelector('.ext-factory').value.trim();
                 if(!name && !factory) return;
                 
-                const ap = card.querySelector('.p-ap').value || 0;
-                const br = card.querySelector('.p-br').value || 0;
-                const wi = card.querySelector('.p-wi').value || 0;
                 const s = card.querySelector('.p-single').value || 0;
                 const r = card.querySelector('.p-renew').value || 0;
+                const a = card.querySelector('.p-a-project').value || 0;
                 const j = card.querySelector('.p-rejoin').value || 0;
-                const vip = card.querySelector('.p-vip').value || 0;
-                const ref = card.querySelector('.p-ref').value || 0;
-                extText += `${name}(${factory}）：${ap}/${br}/${wi}/${s}/${r}/${j}/${vip}/${ref}\n`;
+                extText += `${name}（${factory}）：${s}/${r}/${a}/${j}\n`;
             });
 
             let finalIndividualText = personalText;
@@ -650,8 +639,8 @@
 
             const resultFormat = 
 `${titleDate}
-        AP/BR/WI/單/續/重/VIP/推
-總計：${t_ap}/${t_br}/${t_wi}/${t_single}/${t_renew}/${t_rejoin}/${t_vip}/${t_ref}
+        單/續約/A專案/重入
+總計：${t_single}/${t_renew}/${t_a_project}/${t_rejoin}
 個積
 ${finalIndividualText}
 
@@ -667,10 +656,10 @@ BR ：${getVal('br')}
 WI ：${getVal('wi')}
 VIP：${getVal('vip')}
 =================
+重新入會：${getVal('rejoin')}
+續約：${getVal('renew')}
 推薦名單數：${getVal('ref')}
-續不綁約：${getVal('not')}
-酷卡張數：${getVal('cc')}
-酷卡兌換數：${getVal('cce')}`;
+續不綁約/轉續年約：${getVal('not')}`;
 
             navigator.clipboard.writeText(resultFormat).then(() => {
                 alert('🎉 今日業績與累積數據已完美同步並複製！');
